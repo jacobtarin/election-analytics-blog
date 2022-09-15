@@ -13,14 +13,19 @@ knitr::opts_chunk$set(echo = FALSE)
 # Loading libraries
 library(tidyverse)
 library(sf)
+library(usmap)
 # Reading in data
 house_vote_seat_party <- read_csv("data/house nationwide vote and seat share by party 1948-2020.csv")
 house_vote_district <- read_csv("data/house party vote share by district 1948-2020.csv")
+house_seats <- read_csv("data/house_seats2020.csv")
+
+states_map <- usmap::us_map()
+unique(states_map$abbr)
 
 # Setup for first map
-h <- house_vote_district
+v <- house_vote_district
 # filter for relevant variables
-D_2020 <- h %>%
+v_2020 <- v %>%
   filter(raceYear == 2020) %>%
   select(raceYear, State, district_num, district_id, RepVotes, DemVotes) %>%
 # summarize party vote share by state
@@ -31,21 +36,58 @@ D_2020 <- h %>%
          D_votemargin_st = (sum(DemVotes))/
                             sum(RepVotes + DemVotes)) %>%
   rename(state = State)
-# load usmap
-library(usmap)
-states_map <- usmap::us_map()
-unique(states_map$abbr)
+
+# Setup for second map
+s <- house_seats
+# filter for relevant variables
+s_2020 <- s %>%
+  select(Area, RepWinner, DemWinner, OtherWinner) %>%
+# summarize party vote share by state
+  group_by(Area) %>%
+# mutate Rep vote margin by state %>%
+  mutate(R_seatmargin_st = RepWinner/
+                            (RepWinner + DemWinner + OtherWinner),
+         D_seatmargin_st = DemWinner/
+                            (RepWinner + DemWinner + OtherWinner)) %>%
+  rename(state = Area)
+
 
 ```
 
 This blog post will be the first in a series of posts for Gov 1347: Election Analytics, a course at Harvard taught by Ryan Enos. Over the course of this semester, I will be building up my electoral knowledge in order to build a predictive model of the upcoming 2022 midterm elections. 
 
-# Vote Share by State in 2020
+# Vote Share and Seat Share by State in the 2020 House Election
 
-This post will attempt to visualize past House election data to get a better sense of the past political landscape. Let's begin with the last election in 2020.
+Let's attempt to visualize past House election data to get a better sense of the past political landscape and warm up my incredibly rusty R skills. We'll begin by looking at vote share on a per-state basis:
 
-```{r visualization, warning=FALSE}
-# plot
-plot_usmap(data = D_2020, regions = "states", values = "D_votemargin_st") + 
-scale_fill_gradient(low = "white", high = "blue", name = "Democrat two-party voteshare margin") + theme_minimal()
+```{r voteshare, warning=FALSE}
+# plot1
+
+plot_usmap(data = v_2020, regions = "states", values = "D_votemargin_st", labels = TRUE) + 
+  scale_fill_gradient2(low = "#ff2e31", mid = "white", high = "#187bcd", midpoint = 0.5, 
+                       name = "Two-party vote share margin") +
+  theme_void()
+
 ```
+
+At the state level, it looks like GOP candidates tend to win the popular vote by a larger margin than Democrat candidates. This would suggest that GOP voters turnout at a higher rate in red states than Democrat voters do in blue states. Whether that should be attributed to GOP voters being more partisan than their Democrat counterparts, to structural barriers making it harder for political minorities to vote in red states than blue states, or to some other unknown factor is outside the scope of this exercise, but I find this result quite interesting. 
+
+Let's see what happens when we look at seat share:
+
+```{r seatshare, warning=FALSE}
+# plot2
+
+plot_usmap(data = s_2020, regions = "states", values = "D_seatmargin_st", labels = TRUE) + 
+  scale_fill_gradient2(low = "#ff2e31", mid = "white", high = "#187bcd", midpoint = 0.5, 
+                       name = "Two-party seat share margin") +
+  theme_void()
+
+```
+
+Based off this visualization, it's clear that GOP candidates win seats within a state by an even larger margin than they did in the popular vote. This suggests that certain structural factors allow more GOP candidates to win seats in slightly red states than Democrats do in slightly blue states. 
+
+# Takeaways
+
+What are we to make of this data? At a philosophical level, perhaps democracy isn't working the way we think it should. If one believes that democracy should precisely align with popular sentiment, then one could make the argument that our institutions are in the way of the democratic process. They would be right in a certain respect, but the purpose of this blog post isn't to make value judgements about gerrymandering, voter id laws, etc. 
+
+How does this inform our decision making process when building a model for the upcoming midterm elections? From my perspective, results like this lead me to believe that one needs to be wary of polls and popular sentiment. While these are some of the most obvious sources of predictive data, since it is the people who vote at the end of the day, there seem to be other factors that distort public sentiment and lead to skewed outcomes in the House. At this point in time I would like to try to predict the seats in the house, not the votes for it, so unless I change my mind I must look out for outside factors like this. Recent redistricting is one such factor that remains at the top of my mind.

@@ -65,10 +65,19 @@
 
 
 <p>This blog post will be the first in a series of posts for Gov 1347: Election Analytics, a course at Harvard taught by Ryan Enos. Over the course of this semester, I will be building up my electoral knowledge in order to build a predictive model of the upcoming 2022 midterm elections.</p>
-<div id="vote-share-by-state-in-2020" class="section level1">
-<h1>Vote Share by State in 2020</h1>
-<p>This post will attempt to visualize past House election data to get a better sense of the past political landscape. Let’s begin with the last election in 2020.</p>
-<p><img src="http://example.org/post/2022-09-14-blog-post-1/index_files/figure-html/visualization-1.png" width="672" /></p>
+<div id="vote-share-and-seat-share-by-state-in-the-2020-house-election" class="section level1">
+<h1>Vote Share and Seat Share by State in the 2020 House Election</h1>
+<p>Let’s attempt to visualize past House election data to get a better sense of the past political landscape and warm up my incredibly rusty R skills. We’ll begin by looking at vote share on a per-state basis:</p>
+<p><img src="http://example.org/post/2022-09-14-blog-post-1/index_files/figure-html/voteshare-1.png" width="672" /></p>
+<p>At the state level, it looks like GOP candidates tend to win the popular vote by a larger margin than Democrat candidates. This would suggest that GOP voters turnout at a higher rate in red states than Democrat voters do in blue states. Whether that should be attributed to GOP voters being more partisan than their Democrat counterparts, to structural barriers making it harder for political minorities to vote in red states than blue states, or to some other unknown factor is outside the scope of this exercise, but I find this result quite interesting.</p>
+<p>Let’s see what happens when we look at seat share:</p>
+<p><img src="http://example.org/post/2022-09-14-blog-post-1/index_files/figure-html/seatshare-1.png" width="672" /></p>
+<p>Based off this visualization, it’s clear that GOP candidates win seats within a state by an even larger margin than they did in the popular vote. This suggests that certain structural factors allow more GOP candidates to win seats in slightly red states than Democrats do in slightly blue states.</p>
+</div>
+<div id="takeaways" class="section level1">
+<h1>Takeaways</h1>
+<p>What are we to make of this data? At a philosophical level, perhaps democracy isn’t working the way we think it should. If one believes that democracy should precisely align with popular sentiment, then one could make the argument that our institutions are in the way of the democratic process. They would be right in a certain respect, but the purpose of this blog post isn’t to make value judgements about gerrymandering, voter id laws, etc.</p>
+<p>How does this inform our decision making process when building a model for the upcoming midterm elections? From my perspective, results like this lead me to believe that one needs to be wary of polls and popular sentiment. While these are some of the most obvious sources of predictive data, since it is the people who vote at the end of the day, there seem to be other factors that distort public sentiment and lead to skewed outcomes in the House. At this point in time I would like to try to predict the seats in the house, not the votes for it, so unless I change my mind I must look out for outside factors like this. Recent redistricting is one such factor that remains at the top of my mind.</p>
 </div>
 
 
@@ -76,7 +85,6 @@
 	</div>
 
 	<div class="pagination">
-		<a href="/post/2020-12-01-r-rmarkdown/" class="left arrow">&#8592;</a>
 
 		<a href="#" class="top">Top</a>
 	</div>
@@ -86,7 +94,7 @@
         		<footer>
 			
 			<span>
-			&copy; <time datetime="2022-09-15 00:21:24.3857606 -0400 EDT m=&#43;0.540582601">2022</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2022-09-15 02:08:52.3823864 -0400 EDT m=&#43;0.363914701">2022</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 
