@@ -8,12 +8,13 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 14 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Blog Post 1</title>
+      <title>Blog Post 1: Exploring Past House Vote Share</title>
       <link>http://example.org/post/2022-09-14-blog-post-1/</link>
       <pubDate>Wed, 14 Sep 2022 00:00:00 +0000</pubDate>
       
       <guid>http://example.org/post/2022-09-14-blog-post-1/</guid>
-      <description>Hi everyone</description>
+      <description>This blog post will be the first in a series of posts for Gov 1347: Election Analytics, a course at Harvard taught by Ryan Enos. Over the course of this semester, I will be building up my electoral knowledge in order to build a predictive model of the upcoming 2022 midterm elections.
+Vote Share by State in 2020This post will attempt to visualize past House election data to get a better sense of the past political landscape.</description>
     </item>
     
     <item>
