@@ -15,9 +15,9 @@ library(tidyverse)
 library(sf)
 library(usmap)
 # Reading in data
-house_vote_seat_party <- read_csv("data/house nationwide vote and seat share by party 1948-2020.csv")
-house_vote_district <- read_csv("data/house party vote share by district 1948-2020.csv")
-house_seats <- read_csv("data/house_seats2020.csv")
+house_vote_seat_party <- read_csv("../data/house nationwide vote and seat share by party 1948-2020.csv")
+house_vote_district <- read_csv("../data/house party vote share by district 1948-2020.csv")
+house_seats <- read_csv("../data/house_seats2020.csv")
 
 states_map <- usmap::us_map()
 unique(states_map$abbr)
