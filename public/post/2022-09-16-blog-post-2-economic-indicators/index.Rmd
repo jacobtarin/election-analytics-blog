@@ -16,7 +16,7 @@ library(plotly)
 
 ```
 
-```{r plotlyTest, warning=FALSE}
+```{r plotlyTest, echo = FALSE, warning=FALSE}
 cd114 <- st_read("../data/districtShapes/districts114.shp", quiet = TRUE)
 
 # Select Oregon
