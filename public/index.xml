@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My New Hugo Site</title>
+    <title>Jacob&#39;s 2022 Midterm Elections Blog</title>
     <link>http://example.org/</link>
-    <description>Recent content on My New Hugo Site</description>
+    <description>Recent content on Jacob&#39;s 2022 Midterm Elections Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 14 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 16 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Blog Post 1: Exploring Past House Vote Share and Seat</title>
+      <title>Blog Post 2: Economic Indicators</title>
+      <link>http://example.org/post/2022-09-16-blog-post-2-economic-indicators/</link>
+      <pubDate>Fri, 16 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2022-09-16-blog-post-2-economic-indicators/</guid>
+      <description>This week I’ll be looking at some economic indicators to see if they hold any predictive power over past midterm elections.
+cd114 &amp;lt;- st_read(&amp;quot;../data/districtShapes/districts114.shp&amp;quot;, quiet = TRUE)# Select Oregoncd114_or &amp;lt;- cd114 %&amp;gt;% filter(STATENAME == &amp;quot;Oregon&amp;quot;) %&amp;gt;% mutate(DISTRICT = as.character(DISTRICT)) %&amp;gt;% select(DISTRICT)or &amp;lt;- ggplot() +geom_sf(data = cd114_or, aes(fill = &amp;quot;blue&amp;quot;), alpha = 0.9) +theme_void()ggplotly(or) %&amp;gt;% layout(xaxis = list(showline = FALSE),yaxis = list(showline = FALSE))</description>
+    </item>
+    
+    <item>
+      <title>Blog Post 1: Exploring Past House Vote and Seat Share</title>
       <link>http://example.org/post/2022-09-14-blog-post-1/</link>
       <pubDate>Wed, 14 Sep 2022 00:00:00 +0000</pubDate>
       
