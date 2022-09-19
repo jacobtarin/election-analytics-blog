@@ -7,29 +7,92 @@ categories: []
 tags: []
 ---
 
-This week I'll be looking at some economic indicators to see if they hold any predictive power over past midterm elections.
+This week I'll be looking at some economic indicators to see if they hold any predictive power over past midterm elections. In particular, I am going to compare three models: one that uses only GDP growth in the last quarter before an election as an independent variable, one that uses only RDI growth in the last quarter before an election, and one that looks at both. 
+
+# Introduction
+
+[Healy and Lenz](https://www.jstor.org/stable/24363467), among many others, document how the recent performance of the economy is a very good predictor of popular vote share in the presidential election. Is this true for congressional elections as well? I've chosen GDP and RDI as two measures that capture different parts of the economy, with the former capturing overall economic growth and the latter capturing the growth of real disposable income. If voters elect their representatives based on their recollection of the performance of the economy, one would expect voters to reward incumbents during periods of growth and punish them during periods of decline. In other words, the incumbent party's vote share should increase as the economy grows. Let's see if this hypothesis holds up when we plot the two single variate models and look at the coefficients of the other multivariate model.
 
 ```{r setup, include=FALSE}
 library(tidyverse)
-library(sf)
-library(plotly)
+
+# Load electoral and economic data
+house_votes <- read_csv("../data/house_popvote_seats.csv")
+rdi_quarterly <- read_csv("../data/RDI_quarterly.csv")
+gdp_quarterly <- read_csv("../data/GDP_quarterly.csv")
+
+# Merge data for GDP and RDI
+ec_join <- left_join(gdp_quarterly, rdi_quarterly, by = c("year", "quarter_yr", "quarter_cycle"))
+
+# Merge economic data and vote data
+ec_vote_join <- left_join(ec_join, house_votes, by = "year") %>% 
+  drop_na()
+
+ec_vote_cleaned <- ec_vote_join %>% 
+  select('year', 'winner_party', 'H_incumbent_party', 
+         'H_incumbent_party_majorvote_pct', 
+         'quarter_cycle', 'DSPIC_change_pct', 
+         'GDP_growth_pct') %>%
+  filter(quarter_cycle == 8)
 
 ```
 
-```{r plotlyTest, echo = FALSE, warning=FALSE}
-cd114 <- st_read("../data/districtShapes/districts114.shp", quiet = TRUE)
+``` {r plots, echo = FALSE}
+ec_vote_cleaned %>% ggplot(aes(x = GDP_growth_pct, 
+                           y = H_incumbent_party_majorvote_pct, 
+                           label = year)) +
+  geom_text() +
+    geom_hline(yintercept=50, lty=2) +
+    geom_vline(xintercept=0.01, lty=2) + # median
+    geom_smooth(method="lm", formula = y ~ x) +
+    xlab("Q8-Q7 GDP growth") +
+    ylab("Incumbent party PV") +
+    theme_bw() +
+    theme(
+      axis.text = element_text(size = 10)
+    )
 
-# Select Oregon
-cd114_or <- cd114 %>% 
-  filter(STATENAME == "Oregon") %>% 
-  mutate(DISTRICT = as.character(DISTRICT)) %>% 
-  select(DISTRICT)
+ec_vote_cleaned %>% ggplot(aes(x = DSPIC_change_pct, 
+                           y = H_incumbent_party_majorvote_pct, 
+                           label = year)) +
+  geom_text() +
+    geom_hline(yintercept=50, lty=2) +
+    geom_vline(xintercept=0.01, lty=2) + # median
+    geom_smooth(method="lm", formula = y ~ x) +
+    xlab("Q8-Q7 RDI growth") +
+    ylab("Incumbent party PV") +
+    theme_bw() +
+    theme(
+      axis.text = element_text(size = 10)
+    )
 
-or <- ggplot() +
-  geom_sf(data = cd114_or, aes(fill = "blue"), alpha = 0.9) +
-  theme_void()
+lm_combo <- lm(H_incumbent_party_majorvote_pct ~ GDP_growth_pct + DSPIC_change_pct, data = ec_vote_cleaned)
 
-ggplotly(or) %>% 
-  layout(xaxis = list(showline = FALSE),
-         yaxis = list(showline = FALSE))
+summary(lm_combo)$coefficients
 ```
+
+It looks like all three models predict the opposite behavior from what we expected. As the economy performs better, incumbent party vote share decreases. Does this mean that voters actually punish incumbents when the economy does well? Not really. It is important to notice that visually, there does not seem to be a strong correlation among the data points in this direction. We can look at R-squared values for the single variate models and adjusted R-squared values for the multivariate model to get a more formal sense of the power of this prediction.
+
+GDP Model:
+```{r gdp_model, echo = FALSE}
+lm_gdp <- lm(H_incumbent_party_majorvote_pct ~ GDP_growth_pct, data = ec_vote_cleaned)
+
+lm_rdi <- lm(H_incumbent_party_majorvote_pct ~ DSPIC_change_pct, data = ec_vote_cleaned)
+
+lm_combo <- lm(H_incumbent_party_majorvote_pct ~ GDP_growth_pct + DSPIC_change_pct, data = ec_vote_cleaned) 
+summary(lm_gdp)$r.squared
+```
+
+RDI Model:
+```{r rdi_model, echo = FALSE}
+summary(lm_rdi)$r.squared
+```
+
+Combined Model:
+```{r combo_model, echo = FALSE}
+summary(lm_combo)$adj.r.squared
+```
+
+# Takeaways
+
+The above R-squared and adjusted R-squared values are quite low, which means that these short-term changes in economic indicators are not very good predictors for incumbent party vote share in the House. In other words, voters don't really take the economy into account when choosing a representative, or at least they don't in the way I've chosen to measure it here. When I attempt to predict seat share for the upcoming midterm elections, I'm going to need to look at different factors if I want to accurately predict the outcome, especially if I don't want to rely on incumbency as my main predictor.  
