@@ -1,0 +1,23 @@
+---
+title: 'Blog Post 3: Polling'
+author: Jacob Moore
+date: '2022-09-25'
+slug: []
+categories: []
+tags: []
+---
+
+
+
+<p>This week I will be looking at polls in an attempt to incorporate them into my predictive model of the upcoming midterm elections.</p>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In recent years, especially after the 2016 election, the trustworthiness of polls have come under intense scrutiny. I’m sure we all remember our surprise at Donald Trump winning the election despite nearly every major poll predicting a Clinton victory. While many pollsters cited that the results were withing their established margins of error, spectators were left confused. As <a href="https://www-jstor-org.ezp-prod1.hul.harvard.edu/stable/194212?sid=primo&amp;seq=22#metadata_info_tab_contents">Gelman and King</a> describe, the results of polls are often quite varied. One thing that comes up time and again with respect to 2016 is non-response bias, i.e. that some groups of individuals may be less likely to respond to polls than others, leading to a warped view of the “ground truth.” Pollsters get around this by assigning different weights to different groups of respondents, but this is an opaque solution that varies between pollsters.</p>
+</div>
+<div id="good-pollsters-and-bad-pollsters" class="section level1">
+<h1>Good Pollsters and Bad Pollsters</h1>
+<p>Let’s run with the idea that some pollsters might be better at polling than others. In our model, we might not want to include polls from bad pollsters. 538 uses a metric called <a href="https://fivethirtyeight.com/features/how-fivethirtyeight-calculates-pollster-ratings/">predictive plus-minus</a> to calculate how accurate a pollster might be in future elections, which is then translated into a letter grade for pollster quality. I’m going to take a look at 538’s ratings of pollster quality in 2018 and 2020 to get a sense of the variation in pollster quality. Note that as predictive plus-minus decreases, pollster quality increases.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/plots-1.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/plots-2.png" width="672" />
+As one might expect, it looks like there are a lot of low quality pollsters out there. Interestingly enough, it also looks like the number of average and low quality pollsters increased between 2018 and 2020. According to the data, it looks like there are 57 more pollsters in 2020 than in 2018, so that would likely account for this increase. High quality pollsters seem to have remained stable in terms of numbers, but it looks like they have on average gotten better at polling.</p>
+<p>For my model, I’ll stick to using high quality and average quality pollsters only. I’ll include B- pollsters and above. 538’s cutoff for a B- appears to be a predictive plus-minus of 0.6, which seems pretty good to me.</p>
+</div>

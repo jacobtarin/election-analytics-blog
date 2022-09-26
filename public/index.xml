@@ -6,7 +6,17 @@
     <description>Recent content on Jacob&#39;s 2022 Midterm Elections Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 16 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 25 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blog Post 3: Polling</title>
+      <link>http://example.org/post/2022-09-25-blog-post-3-polling/</link>
+      <pubDate>Sun, 25 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2022-09-25-blog-post-3-polling/</guid>
+      <description>This week I will be looking at polls in an attempt to incorporate them into my predictive model of the upcoming midterm elections.
+IntroductionIn recent years, especially after the 2016 election, the trustworthiness of polls have come under intense scrutiny. I’m sure we all remember our surprise at Donald Trump winning the election despite nearly every major poll predicting a Clinton victory. While many pollsters cited that the results were withing their established margins of error, spectators were left confused.</description>
+    </item>
+    
     <item>
       <title>Blog Post 2: Economic Indicators</title>
       <link>http://example.org/post/2022-09-16-blog-post-2-economic-indicators/</link>
