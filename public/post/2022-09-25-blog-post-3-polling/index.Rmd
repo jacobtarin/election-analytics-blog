@@ -8,12 +8,17 @@ tags: []
 ---
 ```{r setup, include=FALSE}
 library(tidyverse)
+library(lubridate)
 
 # Load pollster ratings
 ratings2018 <- read_csv("../data/pollster-ratings-2018.csv")
 ratings2020 <- read_csv("../data/pollster-ratings-2020.csv")
-generic2018 <- read_csv("../data/538_generic_poll_2018.csv")
-generic2022 <- read_csv("../data/538_generic_poll_2022.csv")
+generic2018 <- read_csv("../data/538_generic_poll_2018.csv") %>% 
+  mutate(start_date = mdy(start_date)) %>% 
+  mutate(end_date = mdy(end_date))
+generic2022 <- read_csv("../data/538_generic_poll_2022.csv")%>% 
+  mutate(startdate = mdy(startdate)) %>% 
+  mutate(enddate = mdy(enddate))
 house_seats <- read_csv("../data/house nationwide vote and seat share by party 1948-2020.csv")
 
 ```
@@ -45,7 +50,9 @@ ggplot(data = ratings2020, aes(x = `Predictive    Plus-Minus`)) +
 ```
 As one might expect, it looks like there are a lot of low quality pollsters out there. Interestingly enough, it also looks like the number of average and low quality pollsters increased between 2018 and 2020. According to the data, it looks like there are 57 more pollsters in 2020 than in 2018, so that would likely account for this increase. High quality pollsters seem to have remained stable in terms of numbers, but it looks like they have on average gotten better at polling. 
 
-For my model, I'll stick to using high quality and average quality pollsters only. I'll include B- pollsters and above. 538's cutoff for a B- appears to be a predictive plus-minus of 0.6, which seems pretty good to me.
+For my model, I'll stick to using high quality and average quality pollsters only. I'll include B- pollsters and above. 538's cutoff for a B- appears to be a predictive plus-minus of 0.6, which seems pretty good to me. I'm also going to run with the idea that polls taken closer to the election should be weighted heavier than ones taken farther away.
+
+*** At this point, other things in my life came up and I had some trouble wrapping my head around how to incorporate polls into my model for seat share. Apologies for not finishing the blog this week but hopefully I'll be able to make a robust model for next week.
 
 ```{r polls, include = FALSE}
 quality2018 <- generic2018 %>% 
@@ -53,6 +60,14 @@ quality2018 <- generic2018 %>%
 
 quality2022 <- generic2022 %>% 
   filter(grade %in% c("A+", "A", "A-", "A/B", "B+", "B", "B-"))
+
+# Use Nate Silver model that polls closer to the election matter more
+days_left <- 42
+poll_wgt <- 1/sqrt(days_left)
+
+# poll_model <- lm()
+
+# poll_wgt*predict()
 
 ```
 
