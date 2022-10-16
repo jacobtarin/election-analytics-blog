@@ -1,0 +1,119 @@
+---
+title: 'Blog Post 4: Expert Predictions and Incumbency'
+author: Jacob Moore
+date: '2022-10-02'
+slug: []
+categories: []
+tags: []
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(sf)
+library(plotly)
+
+# Reading in data (Thank you to Ethan Jasny for the expert ratings datset)
+dist_polls <- read_csv("../data/dist_polls_2018-2022.csv")
+incumbents <- read_csv("../data/incumb_dist_1948-2020.csv")
+expert_ratings <- read_csv("../data/2018_ratings_share.csv")
+historical_results <- read_csv("../data/house party vote share by district 1948-2020.csv")
+cd114 <- st_read("../data/districtShapes/districts114.shp", quiet = TRUE)
+
+# Clean election data
+election_2018 <- historical_results %>% 
+  filter(raceYear == 2018) %>% 
+  select(State, raceYear, Area, RepVotesMajorPercent, DemVotesMajorPercent,
+         CD, state_abb, district_num, district_id, WinnerParty) %>% 
+  mutate(CD = case_when(district_num == 0 ~ paste(state_abb, "01", sep = "-"),
+                        district_num != 0 ~ CD))
+
+# Add margin predictions to expert ratings
+expert_ratings <- expert_ratings %>% 
+  mutate(cpr_margin = case_when(
+    cpr == "Solid Democratic" ~ 60,
+    cpr == "Likely Democratic" ~ 55,
+    cpr == "Lean Democratic" ~ 52.5,
+    cpr == "Toss-up" ~ 50,
+    cpr == "Lean Republican" ~ 47.5,
+    cpr == "Likely Republican" ~ 45,
+    cpr == "Solid Republican" ~ 40
+  )) %>% 
+  mutate(crystal_ball_margin = case_when(
+    crystal_ball == "Safe Democratic" ~ 60,
+    crystal_ball == "Likely Democratic" ~ 55,
+    crystal_ball == "Lean Democratic" ~ 52.5,
+    crystal_ball == "Toss-up" ~ 50,
+    crystal_ball == "Lean Republican" ~ 47.5,
+    crystal_ball == "Likely Republican" ~ 45,
+    crystal_ball == "Safe Republican" ~ 40
+  )) %>% 
+  mutate(inside_elections_margin = case_when(
+    inside_elections == "Solid Democratic" ~ 60,
+    inside_elections == "Likely Democratic" ~ 55,
+    inside_elections == "Lean Democratic" ~ 52.5,
+    inside_elections == "Tilt Democratic" ~ 51.5,
+    inside_elections == "Toss-up" ~ 50,
+    inside_elections == "Tilt Republican" ~ 48.5,
+    inside_elections == "Lean Republican" ~ 47.5,
+    inside_elections == "Likely Republican" ~ 45,
+    inside_elections == "Solid Republican" ~ 40
+  )) %>% 
+  mutate(avg_margin = (cpr_margin + crystal_ball_margin + inside_elections_margin)/3)
+
+# Join election data and expert ratings
+election_2018 <- election_2018 %>% 
+  inner_join(expert_ratings, by = c("CD" = "District")) %>% 
+  rename(STATENAME = State, DISTRICT = district_num) %>% 
+  mutate(DISTRICT = as.character(DISTRICT),
+         expert_diff = avg_margin - DemVotesMajorPercent)
+
+# Clean and simplify shapefiles for join
+cd114 <- st_make_valid(cd114)
+cd114 <- st_simplify(cd114, preserveTopology = TRUE, dTolerance = 1000)
+cd114 <- cd114 %>% left_join(election_2018, by = c("DISTRICT", "STATENAME"))
+
+
+# Cleaning data for plot
+# Select Oregon
+cd114_or <- districts %>% 
+  filter(STATENAME %in% c("Oregon")) %>%
+  mutate(DISTRICT = as.character(DISTRICT))%>%
+  select(DISTRICT)
+
+# # Filter for 2018 election and state
+# D_or_2018 <- historical_results %>%
+#     filter(raceYear == 2018, State %in% c("Oregon")) %>%
+#     select(raceYear, State, district_num, RepVotesMajorPercent, DemVotesMajorPercent) %>%
+#   # summarize party vote share by district
+#     group_by(district_num) %>%
+#     summarise(Dem_votes_pct = DemVotesMajorPercent) %>%
+#   # rename district variable name to match shapefile
+#     rename(DISTRICT = district_num)
+# 
+# # Change class
+# cd114_or$DISTRICT <- as.numeric(cd114_or$DISTRICT)
+# 
+# # Join election results with shapefiles
+# cd114_or <- cd114_or %>% left_join(D_or_2018, by = "DISTRICT")
+
+```
+
+```{r map, echo = FALSE, warning = FALSE}
+us <- ggplot() + 
+  geom_sf(data = cd114, aes(fill = DemVotesMajorPercent),
+          inherit.aes = FALSE, alpha = 0.9) + 
+  scale_fill_binned(low = "blue", high = "red", 
+                    breaks=c(40, 45, 50, 55, 60)) +
+  theme_void() +
+  labs(title = "2018 Democratic Party Vote Share by District",
+       fill = "D-Vote %")
+
+ggplotly(or) %>% 
+  layout(xaxis = list(showline = FALSE),
+         yaxis = list(showline = FALSE))
+```
+
+```{r expert_setup, include = FALSE}
+# Filter for 2018 expert Oregon predictions
+
+```
