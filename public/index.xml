@@ -6,7 +6,17 @@
     <description>Recent content on Jacob&#39;s 2022 Midterm Elections Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 25 Sep 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 02 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blog Post 4: Expert Predictions and Incumbency</title>
+      <link>http://example.org/post/2022-10-02-blog-post-4-expert-predictions-and-incumbency/</link>
+      <pubDate>Sun, 02 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2022-10-02-blog-post-4-expert-predictions-and-incumbency/</guid>
+      <description>This week I’ll be looking at expert predictions and incumbency to help build my model for the upcoming 2022 midterm election. I’ll start by assessing the accuracy of expert predictions in the 2018 midterm elections before incorporating incumbency and potentially expert predictions into my model.
+Expert PredictionsI am not alone when it comes to attempting to predict the outcomes of elections. There are so many different media outlets, researchers, think tanks, and political hobbyists who attempt to predict the outcomes of elections.</description>
+    </item>
+    
     <item>
       <title>Blog Post 3: Polling</title>
       <link>http://example.org/post/2022-09-25-blog-post-3-polling/</link>
