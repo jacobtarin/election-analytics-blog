@@ -148,14 +148,18 @@ As we can see, it looks like Democrats did a little bit better than experts pred
 
 For last week's blog post, I wasn't able to add polling data to my model. I've revisited it here. I've chosen to look at national generic polls for two reasons. First, especially if we're going back a few decades, district level and other kinds of polls become much harder to find. I would like to have a lot of observations in order to improve my model. Second, most people don't know who their House representative is, so generic polls are often the best way to tell who they will vote for their House election, if they decide to turn out. As we've discussed previously, polls get more accurate the closer you are to the start of the election since people start making up their minds as the election approaches. What I've done is average the partisan support of all polls taken 45 days or fewer before the election for each election cycle. 
 
-For my model, I'm first going to predict the seat share of the incumbent president's party in the House using the incumbent president's party, the incumbent party in the House, and GDP growth in the last quarter before the election as an economic indicator. As I've discussed in previous weeks, observers of politics have noted that the president's party tends to lose seats during the midterm election, especially when the economy is doing poorly in the eyes of voters. I include the incumbent party in the house because I want to see whether voters are sensitive to the majority party of the House itself when voting.
+For my model, I'm first going to predict the seat share of the incumbent president's party in the House by looking at whether the incumbent majority party in the House is the same as the president's party, whether an election is a midterm, and GDP growth in the last quarter before the election as an economic indicator. As I've discussed in previous weeks, observers of politics have noted that the president's party tends to lose seats during the midterm election, especially when the economy is doing poorly in the eyes of voters. I include the incumbent party in the house because I want to see whether voters are sensitive to the majority party of the House itself when voting. I've opted not to include expert predictions because I think using expert predictions would be cheating in some way and somewhat difficult to implement given my national approach. It could also expose my model to significant bias if experts are all biased in the same direction, so I'll stick to my own predictions for now. 
+
+Below is a stargazer table which looks at the coefficients of my models:
 
 ```{r, include = FALSE}
 library(tidyverse)
 library(stargazer)
 library(tinytex)
+library(lubridate)
+library(pandoc)
 
-# Load data
+# Load model data
 seats_data <- read_csv("../data/house_popvote_seats.csv")
 gdp_quarterly <- read_csv("../data/GDP_quarterly.csv")
 polls_data <- read_csv("../data/polls_df.csv")
@@ -174,8 +178,8 @@ polls_wrangled <- polls_data %>%
 
 model_seats_data <- seats_data %>% 
   select(year, R_seats, D_seats, R_majorvote_pct, D_majorvote_pct, president_party, H_incumbent_party) %>% 
-  mutate(H_incumbent_party_dummy = ifelse(H_incumbent_party == "D", 1, 0)) %>% # incumbent party in House dummy
   mutate(president_party_dummy = ifelse(president_party == "D", 1, 0)) %>% # president's party dummy
+  mutate(H_incumbent_party_dummy = ifelse(H_incumbent_party == president_party, 1, 0)) %>% # incumbent party in House dummy
   mutate(midterm_dummy = ifelse(year %% 4, 1, 0)) %>% # midterm election dummy
   inner_join(ec_data, by = "year") %>% 
   left_join(polls_wrangled, by = "year") %>% 
@@ -185,21 +189,61 @@ model_seats_data <- seats_data %>%
          incumbent_pres_poll_support = ifelse(president_party == "D", D_avg_poll_support, R_avg_poll_support))
 
 # Model 1: Fundamentals without House majority party
-pres_only_model <- lm(incumbent_pres_seatshare ~ president_party_dummy + midterm_dummy + GDP_growth_pct, data = model_seats_data)
-# stargazer(pres_only_model, type = "text")
+no_house_model <- lm(incumbent_pres_seatshare ~ midterm_dummy + GDP_growth_pct, data = model_seats_data)
+# stargazer(no_house_model, type = "text")
 
 # Model 2: Fundamentals with House majority party
-pres_plus_house_model <- lm(incumbent_pres_seatshare ~ president_party_dummy + H_incumbent_party_dummy + midterm_dummy + GDP_growth_pct, data = model_seats_data)
-# stargazer(pres_plus_house_model, type = "text")
+house_model <- lm(incumbent_pres_seatshare ~ H_incumbent_party_dummy + midterm_dummy + GDP_growth_pct, data = model_seats_data)
+# stargazer(house_model, type = "text")
 
 # Model 3: Polls only
 polls_only_model <- lm(incumbent_pres_seatshare ~ incumbent_pres_poll_support, data = model_seats_data)
 # stargazer(polls_only_model, type = "text")
 
 # Model 4: Everything combined
-combo <- lm(incumbent_pres_seatshare ~ president_party_dummy + H_incumbent_party_dummy + midterm_dummy + incumbent_pres_poll_support + GDP_growth_pct, data = model_seats_data)
+combo <- lm(incumbent_pres_seatshare ~ H_incumbent_party_dummy + midterm_dummy + incumbent_pres_poll_support + GDP_growth_pct, data = model_seats_data)
 # stargazer(combo, type = "text")
 
-# stargazer(pres_only_model, pres_plus_house_model, polls_only_model, combo, title = "Model Coefficients", 
-#           align = TRUE, type = "latex", font.size = "small", header = FALSE)
+# stargazer(no_house_model, house_model, polls_only_model, combo, title = "Model Coefficients",
+#           align = TRUE, type = "html", font.size = "small", header = FALSE, dep.var.labels = "Seatshare of Incumbent President's Party",
+#           covariate.labels = c("House Majority Party Same as President", "Midterm Election", "GDP Growth Pct",
+#                                "Incumbent President's Party Poll Support"))
+
+
+
+# Load and clean prediction data
+polls_2022 <- read_csv("../data/generic_ballot_averages.csv") %>% # pulled from https://projects.fivethirtyeight.com/polls/generic-ballot/ on 10/17 
+  filter(cycle == 2022) %>% 
+  mutate(date = ymd(date)) %>% 
+  filter(date >= ymd("2022-09-24")) %>% 
+  mutate(D_support = ifelse(candidate == "Democrats", pct_estimate, 100 - pct_estimate)) %>% 
+  summarise(D_avg_poll_support = mean(D_support) / 100) %>% 
+  mutate(R_avg_poll_support = 1 - D_avg_poll_support)
+  
+prediction_data_2022 <- NA
+prediction_data_2022$midterm_dummy <- 1
+prediction_data_2022$incumbent_pres_poll_support <- polls_2022$D_avg_poll_support
+prediction_data_2022$H_incumbent_party_dummy <- 1
+prediction_data_2022$GDP_growth_pct <- -0.9 # Note this is Q2 GDP growth as Q3 hasn't come out yet, source is Bureau of Economic Analysis https://www.bea.gov/news/2022/gross-domestic-product-second-quarter-2022-advance-estimate
+
+# Make a prediction
+predictions <- data.frame(model = "prediction",
+                          incumb_model = predict(house_model, prediction_data_2022),
+                          combined_model = predict(combo, prediction_data_2022))
 ```
+```{r stars, echo = FALSE}
+stargazer(no_house_model, house_model, polls_only_model, combo, title = "Model Coefficients",
+          align = TRUE, type = "text", font.size = "small", header = FALSE, dep.var.labels = "Seatshare of Incumbent President's Party",
+          covariate.labels = c("House Majority Party Same as President", "Midterm Election", "GDP Growth Pct",
+                               "Incumbent President's Party Poll Support"),
+          omit.stat = c("LL","ser","f"))
+```
+These significance codes are really promising, although they do make sense. Like in week 2, it looks like GDP doesn't have much to do with how people vote in House elections. This model predicts that when the incumbent House majority party has the same party as the president, that party will get increased seatshare. This could be the model picking up on periods of time when one party was incredibly successful in getting elected and predicting this would have a lingering effect, which at least makes sense intuitively. Likewise, it also predicts that the president's party does worse during midterm elections with a high significance code. Similarly, doing well in the polls seems to predict electoral wins with a high significance code. 
+
+Now let's look at my predictions using the 2nd and 4th models:
+
+```{r table, asis = TRUE}
+predictions
+```
+
+It looks like both my incumbency only model and my combined incumbency and polling model predict the Democrats to win the House election with an overall 52.3% seatshare. Hopefully my next post will include some interesting new changes to tighten this up a bit as I personally am not too sure the Democrats will maintain their current House majority through the midterms.
