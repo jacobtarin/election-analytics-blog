@@ -7,3 +7,5 @@
 *.Rprofile
 content/post/data/ads_issues_2012-2018.csv
 content/post/data/ads_2006_2018.csv
+public/post/data/ads_issues_2012-2018.csv
+public/post/data/ads_2006_2018.csv
