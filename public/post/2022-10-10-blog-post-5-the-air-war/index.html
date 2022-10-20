@@ -80,7 +80,6 @@
 <div id="making-a-model" class="section level1">
 <h1>Making a Model</h1>
 <p>To build a district-level model that incorporates this data, a lot of filtering needs to be done. We only have access to data from 2006 to 2018, and I want to make sure I only make predictions using districts that have “enough” data, so I arbitrarily decided to only look at districts with 4 or more years of data available. I then attempted to predict Democratic vote share in each district using the ad data from 2018 as more of a proof of concept than anything. Let’s look at coefficients and adjusted r-squared before we look at actual predictions.</p>
-<pre class="r"><code>coeffs_plot</code></pre>
 <p><img src="http://example.org/post/2022-10-10-blog-post-5-the-air-war/index_files/figure-html/plot1-1.png" width="672" /></p>
 <p><img src="http://example.org/post/2022-10-10-blog-post-5-the-air-war/index_files/figure-html/plot2-1.png" width="672" /></p>
 <p>At this point it’s clear that this model is not working how it should. There are coefficients in the negative 700’s, adjusted r-squared values of both 1 and -1, and most of these coefficients and values are outside of acceptable ranges. While I could incorporate this into an actual prediction, I think it’s safe to say that incorporating advertisement would be quite futile given the limited available data, and I would assume that any additional terms like incumbency would simply override these factors.</p>
@@ -101,7 +100,7 @@
         		<footer>
 			
 			<span>
-			&copy; <time datetime="2022-10-20 00:33:00.4247217 -0400 EDT m=&#43;17.852981701">2022</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2022-10-20 00:39:30.1572269 -0400 EDT m=&#43;15.916951101">2022</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 
