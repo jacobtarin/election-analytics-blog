@@ -12,4 +12,103 @@ library(tidyverse)
 library(sf)
 library(lubridate)
 
+# Load data
+districts <- read_csv("../data/incumb_dist_1948-2020.csv") %>% 
+  mutate(district_num = as.character(as.numeric(district_num))) %>% 
+  mutate(district_num = case_when(
+    district_num == "0" ~ "1",
+    TRUE ~ district_num))
+# ad_creative <- read_csv("../data/ads_2006_2018.csv")
+# ad_issues <- read_csv("../data/ads_issues_2012-2018.csv") %>% 
+#   mutate(district = as.character(as.numeric(district)))
+cd114 <- st_read("../data/districtShapes/districts114.shp", quiet = TRUE)
+cd114 <- st_make_valid(cd114)
+cd114 <- st_simplify(cd114, preserveTopology = TRUE, dTolerance = 1000)
+cd114_points <- st_centroid(cd114)
+
+# Aggregate ads data
+# NOTE: I chose to handle NA's as districts with no ads from that party given how this data was collected
+# D_ads <- ad_creative %>% 
+#   filter(party == "Democrat") %>% 
+#   group_by(cycle, state, district) %>% 
+#   summarise(dem_ads = n())
+# 
+# R_ads <- ad_creative %>% 
+#   filter(party == "Republican") %>% 
+#   group_by(cycle, state, district) %>% 
+#   summarise(gop_ads = n())
+# 
+# df <- full_join(D_ads, R_ads, by = c("cycle", "state", "district")) %>%  
+#   mutate(dem_ads = ifelse(is.na(dem_ads), 0, dem_ads)) %>%
+#   mutate(gop_ads = ifelse(is.na(gop_ads), 0, gop_ads)) %>% 
+#   mutate(total_ads = dem_ads + gop_ads) %>% 
+#   mutate(dem_ad_share = dem_ads / total_ads) %>% 
+#   mutate(gop_ad_share = gop_ads / total_ads) %>% 
+#   rename(year = cycle,
+#          DISTRICT = district,
+#          STATENAME = state)
+# 
+# write.csv(df, "ads_by_year.csv")
+
+ads_by_year <- read_csv("../data/ads_by_year.csv")
+ads_2018 <- ads_by_year %>% 
+  filter(year == 2018)
+
+# Join to map
+ads_2018_geom <- left_join(cd114, ads_2018, by = c("DISTRICT", "STATENAME"))
+ads_2018_points <- left_join(cd114_points, ads_2018, by = c("DISTRICT", "STATENAME"))
+
+ads_count_map <- ggplot() +
+  geom_sf(data = ads_2018_geom, aes(fill = total_ads),
+          inherit.aes = FALSE, alpha = 0.9) +
+  scale_fill_gradient(low = "white", high = "green") +
+  coord_sf(xlim = c(-126.43, -66.57), ylim = c(23, 51), expand = FALSE) + 
+  theme_void() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  labs(title = "Campaign Ads Aired in 2018 by District",
+       fill = "Number of Ads")
+
+ads_prop_map <- ggplot() +
+  geom_sf(data = ads_2018_geom, inherit.aes = FALSE, alpha = 0) +
+  geom_sf(data = ads_2018_points, aes(color = dem_ad_share, size = total_ads), 
+          alpha = 0.9) +
+  scale_color_gradient2(low = "red", mid = "#ececec", high = "blue", midpoint = 0.5, limits = c(0, 1)) +
+  coord_sf(xlim = c(-126.43, -66.57), ylim = c(23, 51), expand = FALSE) + 
+  theme_void() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  labs(title = "Democrat Ad Share in 2018 by District",
+       color = "Dem Ad Share",
+       size = "Total Ads")
+
+ads_prop_map2 <- ggplot() +
+  geom_sf(data = ads_2018_geom, aes(fill = dem_ad_share),
+          inherit.aes = FALSE, alpha = 0.9) +
+  scale_fill_gradient2(low = "red", mid = "#ececec", high = "blue", midpoint = 0.5, limits = c(0, 1)) +
+  coord_sf(xlim = c(-126.43, -66.57), ylim = c(23, 51), expand = FALSE) + 
+  theme_void() +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  labs(title = "Democrat Ad Share in 2018 by District",
+       fill = "Dem Ad Share")
+  
 ```
+This week I'll be looking at televised political ads to see if we can learn more about how campaigns work and whether their actions are correlated to any electoral gains. 
+
+# Introduction
+
+Unlike fundamentals that I've looked at in past weeks, the "air war" is something within the control of campaigns. Candidates can choose how much of their campaign budget to dedicate to political ads, along with where and when to air them. When it comes to the actual effects of political ads, the literature is quite lukewarm on them. According to [Gerber et al](https://hollis.harvard.edu/primo-explore/fulldisplay?docid=TN_cdi_proquest_miscellaneous_881466543&context=PC&vid=HVD2&search_scope=everything&tab=everything&lang=en_US), political ads can help shape voter preferences, but only in the short term. There is also the theory that conflicting ads cancel each other out, so campaigns are in a constant battle to out-advertise their opponents. 
+
+# Uneven Distribution of Political Ads
+
+Political ads don't appear on tv in every district. From a financial perspective, it doesn't make any sense to spend money on ads in a district that you're already going to win, so campaigns tend to only air ads in the most competitive districts. From another perspective, it might not make sense to air an ad if you're a campaign trying to mobilize a group of voters who don't watch tv very often, such as younger voters. To demonstrate this, let's see which districts in the 2018 midterm elections received televised political ads:
+
+```{r map1, echo = FALSE, warning = FALSE}
+ads_count_map
+```
+
+As we can see here, there are many districts where no campaign ads were aired, and many more where there weren't that many ads aired when compared to some other districts. What about our assumption that campaigns don't air ads in noncompetitive districts? Let's take a look at the partisan ratios of ads aired by district:
+
+```{r map2, echo = FALSE, warning = FALSE}
+ads_prop_map
+```
+
+It seems like many of the districts where political ads were aired saw a lot of them, lending credibility to the idea that campaigns focus ads on competitive districts. Interestingly, most of these districts with lots of ads--perhaps about 15,000 or so ads during the 2018 election cycle--saw a slightly higher proportion of Democrat ads over Republican ads. Since this was the 2018 midterm election, this lines up with the anti-Trump rhetoric and the Democratic Party's efforts to mobilize voters and swing long-help GOP seats. There were also quite a few districts that saw a small amount of ads, and most of these had either mainly Democrat ads or mainly Republican ads, suggesting that these were less competitive districts overall.
