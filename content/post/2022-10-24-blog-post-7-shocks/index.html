@@ -1,0 +1,146 @@
+---
+title: 'Blog Post 7: Shocks'
+author: Jacob Moore
+date: '2022-10-24'
+slug: []
+categories: []
+tags: []
+---
+
+
+
+<p>This week I’ll be thinking about shocks, how they play into elections, and how they play into my model.</p>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In the context of elections, most people think of shocks as important events which occur during the election cycle that weren’t necessarily planned. These can be things ranging from earthquakes and judicial decisions to economic collapse and personal scandals. Much like advertisement, the effects of these shocks are often temporary, but existing literature has varying opinions on what kinds of shocks are relevant to voters. Some, like <a href="https://www.vanderbilt.edu/csdi/research/CSDI_WP_05-2013.pdf">Achen and Bartels</a>, argue that things even as outlandish as shark attacks can cause voters to punish incumbents during elections, although there are many skeptics like <a href="https://hollis.harvard.edu/primo-explore/fulldisplay?docid=TN_cdi_crossref_primary_10_1086_699244&amp;context=PC&amp;vid=HVD2&amp;search_scope=everything&amp;tab=everything&amp;lang=en_US">Fowler and Hall</a> who would disagree. <a href="https://hollis.harvard.edu/primo-explore/fulldisplay?docid=TN_cdi_crossref_primary_10_1561_100_00009057&amp;context=PC&amp;vid=HVD2&amp;search_scope=everything&amp;tab=everything&amp;lang=en_US">Healy et al</a> suggest that shocks outside of political control like tornadoes can still result in logical changes in voter behavior if the aftermath of the disaster was or wasn’t handled well. Regardless, the important thing to note is that shocks happen all the time. Whether or not any one shock will change the outcome of an election is a difficult thing to determine.</p>
+</div>
+<div id="gas-prices" class="section level1">
+<h1>Gas Prices</h1>
+<p>News surrounding the invasion of the Ukraine and subsequent spikes in gas prices got me thinking about whether something like this could have a negative effect on the incumbent Democratic Party. As we’ve noted earlier on in the class, most people are not very aware of politics because they are busy with other things in their life. As a result, things like judicial appointments and revelations during federal hearings—shocking as they may be—will simply go unnoticed by the majority of voters. Likewise, even significant political shocks such as the Dobbs decision might not sway many voters because of how polarizing abortion already is. If you care about abortion, the decision likely isn’t going to change your partisan alignment. On the other hand, spikes in gas prices are felt everywhere by everyone who drives a car. Anecdotally, I can’t even begin to count the number of times I’ve encountered people complaining about rising gas prices. As a kind of economic shock, a spike in gas price is something that is hard to ignore for the average voter.</p>
+</div>
+<div id="modeling" class="section level1">
+<h1>Modeling</h1>
+<p>In the context of modeling, it’s important to find a dataset with enough observations and I was fortunately able to find available data about the price of regular grade gas in America from 1991 to 2022. This will be a smaller timescale than my previous model that goes from 1948 to 2022 but it seems better than nothing. Another nice part of looking at gas prices is that price shocks happen often enough that hopefully there will be some predictivity if this is something that actually influences voters. The next question for me to answer was how to operationalize gas price shocks into something I could incorporate in my model. I looked at both price spikes and price drops to see if voter behavior changed differently based on these price directions. Below are my assumptions and general thinking on how to tackle this question:</p>
+<ol style="list-style-type: decimal">
+<li>Calculate percent change in gas price from month to month</li>
+</ol>
+<ul>
+<li>My assumption is that changes on a monthly time frame would capture longer-term price changes which would leave a lasting impression on voters</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>Establish a threshold by which to classify a given month as a price shock and assign an indicator variable</li>
+</ol>
+<ul>
+<li>Gas prices are always rising on average, so it’s important to only identify months with significant changes in gas price</li>
+<li>Arbitrarily I set a high threshold of voter sensitivity to a 10% increase in gas price and a low threshold of voter sensitivity to an 8% increase</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Sum the number of shocks that occur during an election year for the months of January through October</li>
+</ol>
+<ul>
+<li>Here I’m assuming that voters don’t have a good memory when it comes to gas price shocks, although general forgetfulness is fairly well-documented if I recall</li>
+<li>My data uses the price of gas on the 15th of every month so observations in November and December were dropped as they would come after the election</li>
+</ul>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<p>First, let’s take a look at my old fundamentals model and restrict it to our new time scale of 1991 to 2020</p>
+<pre><code>## 
+## =================================================================================
+##                                                    Dependent variable:           
+##                                          ----------------------------------------
+##                                          Seatshare of Incumbent President&#39;s Party
+## ---------------------------------------------------------------------------------
+## House Majority Party Same as President                   8.446***                
+##                                                          (2.542)                 
+##                                                                                  
+## Midterm Election                                         -5.930**                
+##                                                          (2.091)                 
+##                                                                                  
+## Incumbent President&#39;s Party Poll Support                  0.565                  
+##                                                          (0.400)                 
+##                                                                                  
+## GDP Growth Pct                                           -2.437*                 
+##                                                          (1.287)                 
+##                                                                                  
+## Constant                                                  18.878                 
+##                                                          (20.355)                
+##                                                                                  
+## ---------------------------------------------------------------------------------
+## Observations                                                15                   
+## R2                                                        0.737                  
+## Adjusted R2                                               0.631                  
+## Residual Std. Error                                  3.063 (df = 10)             
+## F Statistic                                       6.995*** (df = 4; 10)          
+## =================================================================================
+## Note:                                                 *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>It looks like it generally retains the previous significance and adjust R-squared values, but now GDP growth has some significance and is correlated to a loss in seatshare for the party of the incumbent president, which is pretty strange. Since GDP generally grows most years, perhaps the model is picking up on that which could be interesting to revisit later. For now let’s move on and look at models that use only gas spikes:</p>
+<pre><code>## 
+## =========================================================================
+##                                           Dependent variable:            
+##                               -------------------------------------------
+##                                Seatshare of Incumbent President&#39;s Party  
+##                                  (1)        (2)        (3)        (4)    
+## -------------------------------------------------------------------------
+## High Spike Threshold (+10%)     2.136                                    
+##                                (2.105)                                   
+##                                                                          
+## Low Spike Threshold (+8%)                  2.226                         
+##                                           (1.890)                        
+##                                                                          
+## High Drop Threshold (-10%)                            0.553              
+##                                                      (2.352)             
+##                                                                          
+## Low Drop Threshold (-8%)                                         1.204   
+##                                                                 (1.870)  
+##                                                                          
+## Constant                      49.011***  48.375***  49.860***  49.526*** 
+##                                (1.630)    (1.890)    (1.488)    (1.527)  
+##                                                                          
+## -------------------------------------------------------------------------
+## Observations                      15         15         15         15    
+## R2                              0.073      0.096      0.004      0.031   
+## Adjusted R2                     0.002      0.027      -0.072     -0.044  
+## Residual Std. Error (df = 13)   5.040      4.977      5.225      5.154   
+## F Statistic (df = 1; 13)        1.030      1.387      0.055      0.415   
+## =========================================================================
+## Note:                                         *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>And it looks like we have no significance with a low R-squared. Interestingly enough, regardless of whether there is a price spike or price drop my models predict that the incumbent party will win seatshare, and this seatshare is more sensitive to price spikes than price drops. What happens if I combine these thresholds with our previous model?</p>
+<pre><code>## 
+## ==================================================================================
+##                                                     Dependent variable:           
+##                                          -----------------------------------------
+##                                          Seatshare of Incumbent President&#39;s Party 
+##                                                   (1)                  (2)        
+## ----------------------------------------------------------------------------------
+## House Majority Party Same as President          7.632**              8.550**      
+##                                                 (2.692)              (2.635)      
+##                                                                                   
+## Midterm Election                               -5.261**              -5.251*      
+##                                                 (2.214)              (2.451)      
+##                                                                                   
+## Incumbent President&#39;s Party Poll Support         0.670                0.646       
+##                                                 (0.416)              (0.436)      
+##                                                                                   
+## Spike Threshold (+10%)                           1.365                            
+##                                                 (1.431)                           
+##                                                                                   
+## Spike Threshold (+8%)                                                 0.836       
+##                                                                      (1.422)      
+##                                                                                   
+## GDP Growth Pct                                  -2.786*              -2.496*      
+##                                                 (1.344)              (1.335)      
+##                                                                                   
+## Constant                                        13.660               13.902       
+##                                                (21.167)             (22.691)      
+##                                                                                   
+## ----------------------------------------------------------------------------------
+## Observations                                      15                   15         
+## R2                                               0.761                0.746       
+## Adjusted R2                                      0.628                0.606       
+## Residual Std. Error (df = 9)                     3.077                3.169       
+## F Statistic (df = 5; 9)                         5.728**              5.299**      
+## ==================================================================================
+## Note:                                                  *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
+<p>I decided to remove price drops just to focus on the idea of voters punishing incumbents for bad performance but it looks like gas price spikes don’t really do anything significant for my model.</p>
+</div>
