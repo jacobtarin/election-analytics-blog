@@ -174,4 +174,4 @@ stargazer(combo_shocks_hi, combo_shocks_lo, type = "text",
           dep.var.labels = "Seatshare of Incumbent President's Party")
 ```
 
-I decided to remove price drops just to focus on the idea of voters punishing incumbents for bad performance but it looks like gas price spikes don't really do anything significant for my model.
+I decided to remove price drops just to focus on the idea of voters punishing incumbents for bad performance but it looks like gas price spikes don't really do anything significant for my model. Looking back it also may have been more productive to look at the length of price spikes vs. drops since these big price movements often occur for a period of time before reverting to a more established norm. Given the recent changes in gas prices due to the invasion of Ukraine, perhaps the relationship people make between gas prices and presidential action is stronger this election than previous ones. Regardless, historical data does not seem to show a strong relationship between gas price shocks and voter behavior.
