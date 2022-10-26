@@ -67,8 +67,8 @@ model_seats_data <- seats_data %>%
 model_seats_data_1991 <- model_seats_data %>% 
   filter(year >= 1991)
 control <- lm(incumbent_pres_seatshare ~ H_incumbent_party_dummy + 
-                     midterm_dummy + incumbent_pres_poll_support + 
-                     GDP_growth_pct, data = model_seats_data_1991)
+              midterm_dummy + incumbent_pres_poll_support, 
+              data = model_seats_data_1991)
 # stargazer(control, type = "text")
 
 # Model 2: Only gas spikes/drops with high threshold
@@ -83,14 +83,14 @@ lo_drop_only <- lm(incumbent_pres_seatshare ~ drops_8, data = model_seats_data_1
 
 # Model 4: Gas shocks and fundamentals with high threshold
 combo_shocks_hi <- lm(incumbent_pres_seatshare ~ H_incumbent_party_dummy + 
-                     midterm_dummy + incumbent_pres_poll_support + 
-                     spikes_10 + GDP_growth_pct, data = model_seats_data_1991)
+                      midterm_dummy + incumbent_pres_poll_support + 
+                      spikes_10, data = model_seats_data_1991)
 # stargazer(model_spike_hi, type = "text")
 
 # Model 5: Gas shocks and fundamentals with low threshold
 combo_shocks_lo <- lm(incumbent_pres_seatshare ~ H_incumbent_party_dummy + 
-                     midterm_dummy + incumbent_pres_poll_support + 
-                     spikes_8 + GDP_growth_pct, data = model_seats_data_1991)
+                      midterm_dummy + incumbent_pres_poll_support + 
+                      spikes_8, data = model_seats_data_1991)
 # stargazer(model_spike_lo, type = "text")
 
 
@@ -115,10 +115,17 @@ prediction_data_2022$midterm_dummy <- 1
 prediction_data_2022$incumbent_pres_poll_support <- polls_2022$D_avg_poll_support
 prediction_data_2022$H_incumbent_party_dummy <- 1
 prediction_data_2022$GDP_growth_pct <- -0.9 # Note this is Q2 GDP growth as Q3 hasn't come out yet, source is Bureau of Economic Analysis https://www.bea.gov/news/2022/gross-domestic-product-second-quarter-2022-advance-estimate
+prediction_data_2022$spikes_10 <- 2
+prediction_data_2022$spikes_8 <- 3
 
 # Make a prediction
-# predictions <- data.frame(model = "prediction",
-#                           combined_model = predict(combo, prediction_data_2022))
+predictions <- data.frame(model = "prediction",
+                          fund_no_gas = predict(control, 
+                                            prediction_data_2022),
+                          combined_model_hi = predict(combo_shocks_hi,
+                                                   prediction_data_2022),
+                          combined_model_lo = predict(combo_shocks_lo,
+                                                      prediction_data_2022))
 ```
 
 This week I'll be thinking about shocks, how they play into elections, and how they play into my model. 
@@ -146,12 +153,12 @@ In the context of modeling, it's important to find a dataset with enough observa
   
 # Results
 
-First, let's take a look at my old fundamentals model and restrict it to our new time scale of 1991 to 2020
+First, let's take a look at my old fundamentals model, remove GDP growth because it wasn't significant, and restrict it to our new time scale of 1991 to 2020:
 
 ```{r, warning = FALSE, echo = FALSE}
 stargazer(control, type = "text", 
           covariate.labels = c("House Majority Party Same as President", "Midterm Election", 
-                               "Incumbent President's Party Poll Support", "GDP Growth Pct"),
+                               "Incumbent President's Party Poll Support"),
           dep.var.labels = "Seatshare of Incumbent President's Party")
 ```
 
@@ -170,8 +177,14 @@ And it looks like we have no significance with a low R-squared. Interestingly en
 stargazer(combo_shocks_hi, combo_shocks_lo, type = "text",
           covariate.labels = c("House Majority Party Same as President", "Midterm Election", 
                                "Incumbent President's Party Poll Support", "Spike Threshold (+10%)",
-                               "Spike Threshold (+8%)", "GDP Growth Pct"),
+                               "Spike Threshold (+8%)"),
           dep.var.labels = "Seatshare of Incumbent President's Party")
 ```
 
-I decided to remove price drops just to focus on the idea of voters punishing incumbents for bad performance but it looks like gas price spikes don't really do anything significant for my model. Looking back it also may have been more productive to look at the length of price spikes vs. drops since these big price movements often occur for a period of time before reverting to a more established norm. Given the recent changes in gas prices due to the invasion of Ukraine, perhaps the relationship people make between gas prices and presidential action is stronger this election than previous ones. Regardless, historical data does not seem to show a strong relationship between gas price shocks and voter behavior.
+I decided to remove price drops just to focus on the idea of voters punishing incumbents for bad performance but it looks like gas price spikes don't really do anything significant for my model. Looking back it also may have been more productive to look at the length of price spikes vs. drops since these big price movements often occur for a period of time before reverting to a more established norm. Given the recent changes in gas prices due to the invasion of Ukraine, perhaps the relationship people make between gas prices and presidential action is stronger this election than previous ones. Regardless, historical data does not seem to show a strong relationship between gas price shocks and voter behavior. Let's see what my new prediction is:
+
+``` {r, echo = FALSE}
+predictions
+```
+
+Looks like the Democrats are predicted to lose pretty significantly in the House with my updated model, although the main change here was just restricting the years I'm looking at.

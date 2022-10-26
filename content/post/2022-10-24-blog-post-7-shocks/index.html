@@ -44,34 +44,31 @@ tags: []
 </div>
 <div id="results" class="section level1">
 <h1>Results</h1>
-<p>First, let’s take a look at my old fundamentals model and restrict it to our new time scale of 1991 to 2020</p>
+<p>First, let’s take a look at my old fundamentals model, remove GDP growth because it wasn’t significant, and restrict it to our new time scale of 1991 to 2020:</p>
 <pre><code>## 
 ## =================================================================================
 ##                                                    Dependent variable:           
 ##                                          ----------------------------------------
 ##                                          Seatshare of Incumbent President&#39;s Party
 ## ---------------------------------------------------------------------------------
-## House Majority Party Same as President                   8.446***                
-##                                                          (2.542)                 
+## House Majority Party Same as President                   8.078**                 
+##                                                          (2.816)                 
 ##                                                                                  
-## Midterm Election                                         -5.930**                
-##                                                          (2.091)                 
+## Midterm Election                                        -7.844***                
+##                                                          (2.034)                 
 ##                                                                                  
-## Incumbent President&#39;s Party Poll Support                  0.565                  
-##                                                          (0.400)                 
+## Incumbent President&#39;s Party Poll Support                  0.050                  
+##                                                          (0.326)                 
 ##                                                                                  
-## GDP Growth Pct                                           -2.437*                 
-##                                                          (1.287)                 
-##                                                                                  
-## Constant                                                  18.878                 
-##                                                          (20.355)                
+## Constant                                                 44.175**                
+##                                                          (17.066)                
 ##                                                                                  
 ## ---------------------------------------------------------------------------------
 ## Observations                                                15                   
-## R2                                                        0.737                  
-## Adjusted R2                                               0.631                  
-## Residual Std. Error                                  3.063 (df = 10)             
-## F Statistic                                       6.995*** (df = 4; 10)          
+## R2                                                        0.642                  
+## Adjusted R2                                               0.545                  
+## Residual Std. Error                                  3.404 (df = 11)             
+## F Statistic                                       6.585*** (df = 3; 11)          
 ## =================================================================================
 ## Note:                                                 *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
 <p>It looks like it generally retains the previous significance and adjust R-squared values, but now GDP growth has some significance and is correlated to a loss in seatshare for the party of the incumbent president, which is pretty strange. Since GDP generally grows most years, perhaps the model is picking up on that which could be interesting to revisit later. For now let’s move on and look at models that use only gas spikes:</p>
@@ -113,34 +110,34 @@ tags: []
 ##                                          Seatshare of Incumbent President&#39;s Party 
 ##                                                   (1)                  (2)        
 ## ----------------------------------------------------------------------------------
-## House Majority Party Same as President          7.632**              8.550**      
-##                                                 (2.692)              (2.635)      
+## House Majority Party Same as President          7.725**              8.150**      
+##                                                 (3.105)              (2.936)      
 ##                                                                                   
-## Midterm Election                               -5.261**              -5.251*      
-##                                                 (2.214)              (2.451)      
+## Midterm Election                               -7.684***            -7.364**      
+##                                                 (2.169)              (2.432)      
 ##                                                                                   
-## Incumbent President&#39;s Party Poll Support         0.670                0.646       
-##                                                 (0.416)              (0.436)      
+## Incumbent President&#39;s Party Poll Support         0.063                0.102       
+##                                                 (0.342)              (0.363)      
 ##                                                                                   
-## Spike Threshold (+10%)                           1.365                            
-##                                                 (1.431)                           
+## Spike Threshold (+10%)                           0.555                            
+##                                                 (1.588)                           
 ##                                                                                   
-## Spike Threshold (+8%)                                                 0.836       
-##                                                                      (1.422)      
+## Spike Threshold (+8%)                                                 0.635       
+##                                                                      (1.585)      
 ##                                                                                   
-## GDP Growth Pct                                  -2.786*              -2.496*      
-##                                                 (1.344)              (1.335)      
-##                                                                                   
-## Constant                                        13.660               13.902       
-##                                                (21.167)             (22.691)      
+## Constant                                       43.530**              40.866*      
+##                                                (17.886)             (19.584)      
 ##                                                                                   
 ## ----------------------------------------------------------------------------------
 ## Observations                                      15                   15         
-## R2                                               0.761                0.746       
-## Adjusted R2                                      0.628                0.606       
-## Residual Std. Error (df = 9)                     3.077                3.169       
-## F Statistic (df = 5; 9)                         5.728**              5.299**      
+## R2                                               0.647                0.648       
+## Adjusted R2                                      0.505                0.507       
+## Residual Std. Error (df = 10)                    3.549                3.542       
+## F Statistic (df = 4; 10)                        4.575**              4.602**      
 ## ==================================================================================
 ## Note:                                                  *p&lt;0.1; **p&lt;0.05; ***p&lt;0.01</code></pre>
-<p>I decided to remove price drops just to focus on the idea of voters punishing incumbents for bad performance but it looks like gas price spikes don’t really do anything significant for my model. Looking back it also may have been more productive to look at the length of price spikes vs. drops since these big price movements often occur for a period of time before reverting to a more established norm. Given the recent changes in gas prices due to the invasion of Ukraine, perhaps the relationship people make between gas prices and presidential action is stronger this election than previous ones. Regardless, historical data does not seem to show a strong relationship between gas price shocks and voter behavior.</p>
+<p>I decided to remove price drops just to focus on the idea of voters punishing incumbents for bad performance but it looks like gas price spikes don’t really do anything significant for my model. Looking back it also may have been more productive to look at the length of price spikes vs. drops since these big price movements often occur for a period of time before reverting to a more established norm. Given the recent changes in gas prices due to the invasion of Ukraine, perhaps the relationship people make between gas prices and presidential action is stronger this election than previous ones. Regardless, historical data does not seem to show a strong relationship between gas price shocks and voter behavior. Let’s see what my new prediction is:</p>
+<pre><code>##        model fund_no_gas combined_model_hi combined_model_lo
+## 1 prediction    44.43416          44.71355            43.608</code></pre>
+<p>Looks like the Democrats are predicted to lose pretty significantly in the House with my updated model, although the main change here was just restricting the years I’m looking at.</p>
 </div>
