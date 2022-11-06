@@ -46,6 +46,8 @@ historical_data <- left_join(incumbents, cvap, by =
   mutate(pres_rep_match = 
            ifelse(pres_rep_match == "Incumbent", 1, 0)) %>% 
   mutate(pres_rep_match = replace_na(pres_rep_match, 0)) %>% 
+  mutate(winner_party = 
+           ifelse(winner_candidate == "RepCandidate", "R", "D")) %>% 
   left_join(expert_predictions, by = c("year", "state", "district_num"))
 
 # Create model
@@ -69,7 +71,7 @@ nested_data <- historical_data %>%
   mutate(turnout_p = unlist(p_val_fix)[2]) %>% 
   mutate(pres_rep_p = unlist(p_val_fix)[3])
 
-# Generate plots
+# Generate summary plots
 adj_r_sq_hist <- ggplot(data = nested_data, aes(x = `adj.r.squared`)) +
   geom_histogram(binwidth = 0.05, color = "white", fill = "#69b3a2") +
   labs(title = "Adjusted R-Squared of District Turnout Models",
@@ -101,6 +103,29 @@ incumb_p_hist <- ggplot(data = nested_data, aes(x = pres_rep_p)) +
   labs(title = "Incumbency P-Values",
        x = "P-Value",
        y = "Count")
+
+# Build predictions
+turnout_2022_avg <- c()
+turnout_2022_low <- c()
+turnout_2022_hi <- c()
+incumb_2022 <- c()
+
+for (district in 1:nrow(nested_data)){
+  temp <- nested_data[[2]][[district]]
+  
+  # Create model for each district
+  model <- lm(incumbent_pres_pct ~ turnout + pres_rep_match, data = temp)
+  
+  # Add new turnouts to lists
+  avg_midterm_turnout <- (temp[[16]][[2]] + temp[[16]][[4]]) / 2
+  turnout_2022_avg <- c(turnout_2022_avg, avg_midterm_turnout)
+  turnout_2022_low <- c(turnout_2022_low, avg_midterm_turnout - 10)
+  turnout_2022_hi <- c(turnout_2022_hi, avg_midterm_turnout + 10)
+  
+  # Add new incumbency to lists
+  incumb_2022 <- c(incumb_2022, ifelse(temp[[20]][[1]] == "R", 0, 1))
+}
+
 ```
 This week I'll be looking at the ground game at the district level, taking a pooled approach to my model where I run predictions of every congressional district in the country and tally their results in order to get a national seatshare prediction. Last week I did something similar with ad data on a few districts, so as a proof of concept I'm going to try it again with turnout data since it's available for all districts. I'm also going to be ignoring redistricting for now because that's a can of worms I do not want to open right now.
 
@@ -110,7 +135,7 @@ When we think of political campaigns, we generally think of them serving two mai
 
 # Turnout Model
 
-To that end, I built a very simple model that predicts voteshare of the incumbent president's party as a function of district-level turnout and whether the incumbent House representative is a member of the president's party. For open races I have decided to code both candidates as challengers, so for this incumbency variable all open races will indicate that the incumbent representative is not a member of the sitting president's party. While there is always an incumbent party and a challenger party, even in open races, I believe that having a new candidate is enough of a change that they should not be classified as incumbent. I may revisit this coding decision later but this is the decision I've made for this week. As a warning, I'm only looking at data from 2012 to 2022 since that is the farthest back our citizen voting age population (CVAP) data goes for the district level. Anything before that is made too messy because of redistricting, but given that there is only up to 5 data points for each district, there will probably be a lot of uncertainty for this model as with last week's.
+To that end, I built a very simple model that predicts voteshare of the incumbent president's party as a function of district-level turnout and whether the incumbent House representative is a member of the president's party. For open races I have decided to code both candidates as challengers, so for this incumbency variable all open races will indicate that the incumbent representative is not a member of the sitting president's party. While there is always an incumbent party and a challenger party, even in open races, I believe that having a new candidate is enough of a change that they should not be classified as incumbent. I may revisit this coding decision later but this is the decision I've made for this week. As a warning, I'm only looking at data from 2012 to 2022 since that is the farthest back our citizen voting age population (CVAP) data goes for the district level. Anything before that is made too messy because of redistricting, but given that there is only up to 5 data points for each district, there will probably be a lot of uncertainty for this model as with last week's. I've also opted not to include expert predictions because there are too many districts that don't have any expert predictions for them.
 
 Let's look at some histograms of summary statistics for my model:
 
@@ -141,3 +166,5 @@ incumb_p_hist
 ```
 
 Surprisingly, there are a fair number of districts for which turnout has strong statistical significance. There are many more with little to no significance, but this is really interesting to me. If I had more time I'd look into which districts these are but for now I'll just let the histogram do the talking. As expected, incumbency is a very strong predictor as we have seen for many weeks now. 
+
+# Predicting with a pooled model
