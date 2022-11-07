@@ -6,7 +6,16 @@
     <description>Recent content on Jacob&#39;s 2022 Midterm Elections Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Oct 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 07 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blog Post 8: Final Prediction</title>
+      <link>http://example.org/post/2022-11-07-blog-post-7-final-prediction/</link>
+      <pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2022-11-07-blog-post-7-final-prediction/</guid>
+      <description>IntroductionThis week I’ll be making my final prediction for the 2022 House Midterm elections. My final model is a linear regression model using national data from 1954-2020 in order to predict the outcome of this year’s midterms based on 2022 data. I predict that the Democrats will win 48.58% of the seats in the House, which nets about 211 seats for the Democrats and 224 seats for the Republicans.</description>
+    </item>
+    
     <item>
       <title>Blog Post 7: Shocks</title>
       <link>http://example.org/post/2022-10-24-blog-post-7-shocks/</link>
@@ -15,6 +24,15 @@
       <guid>http://example.org/post/2022-10-24-blog-post-7-shocks/</guid>
       <description>This week I’ll be thinking about shocks, how they play into elections, and how they play into my model.
 IntroductionIn the context of elections, most people think of shocks as important events which occur during the election cycle that weren’t necessarily planned. These can be things ranging from earthquakes and judicial decisions to economic collapse and personal scandals. Much like advertisement, the effects of these shocks are often temporary, but existing literature has varying opinions on what kinds of shocks are relevant to voters.</description>
+    </item>
+    
+    <item>
+      <title>Blog Post 6: Ground Game</title>
+      <link>http://example.org/post/2022-10-17-blog-post-6-ground-game/</link>
+      <pubDate>Mon, 17 Oct 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2022-10-17-blog-post-6-ground-game/</guid>
+      <description>This week I’ll be looking at the ground game at the district level, taking a pooled approach to my model where I run predictions of every congressional district in the country and tally their results in order to get a national seatshare prediction. Last week I did something similar with ad data on a few districts, so as a proof of concept I’m going to try it again with turnout data since it’s available for all districts.</description>
     </item>
     
     <item>

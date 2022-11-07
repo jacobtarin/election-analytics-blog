@@ -202,7 +202,7 @@ polls_only_model <- lm(incumbent_pres_seatshare ~ incumbent_pres_poll_support, d
 
 # Model 4: Everything combined
 combo <- lm(incumbent_pres_seatshare ~ H_incumbent_party_dummy + midterm_dummy + incumbent_pres_poll_support + GDP_growth_pct, data = model_seats_data)
-# stargazer(combo, type = "text")
+stargazer(combo, type = "text")
 
 # stargazer(no_house_model, house_model, polls_only_model, combo, title = "Model Coefficients",
 #           align = TRUE, type = "html", font.size = "small", header = FALSE, dep.var.labels = "Seatshare of Incumbent President's Party",

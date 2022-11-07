@@ -2,14 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>http://example.org/post/2022-11-07-blog-post-7-final-prediction/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://example.org/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://example.org/post/</loc>
+    <lastmod>2022-11-07T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>http://example.org/post/2022-10-24-blog-post-7-shocks/</loc>
     <lastmod>2022-10-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://example.org/</loc>
-    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://example.org/post/</loc>
-    <lastmod>2022-10-24T00:00:00+00:00</lastmod>
+    <loc>http://example.org/post/2022-10-17-blog-post-6-ground-game/</loc>
+    <lastmod>2022-10-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://example.org/post/2022-10-10-blog-post-5-the-air-war/</loc>
     <lastmod>2022-10-10T00:00:00+00:00</lastmod>

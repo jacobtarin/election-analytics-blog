@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+		
+		
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<title>Blog Post 6: Ground Game &middot; Jacob&#39;s 2022 Midterm Elections Blog</title>
+
+		
+		<link rel="stylesheet" href="/css/style.css">
+		<link rel="stylesheet" href="/css/fonts.css">
+		
+		<link rel="icon" href="/favicon.ico"/>
+		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+
+		
+		<link href="" rel="alternate" type="application/rss+xml" title="Jacob&#39;s 2022 Midterm Elections Blog" />
+
+		<script src="/js/darkmode.js"></script>
+	</head>
+
+    <body>
+        		<nav class="nav">
+			<div class="nav-container">
+				<a href="/">
+					
+						<h2 class="nav-title">Jacob&#39;s 2022 Midterm Elections Blog</h2>
+					
+				</a>
+				<ul>
+    
+    
+</ul>
+			</div>
+		</nav>
+
+        <div id="darkModeToggle" onclick="toggleDarkMode()">
+  &#9680; 
+</div>
+
+        
+
+<main>
+	
+
+
+        <div class="post">
+		<div class="post-info">
+    <span>Written by</span>
+        Jacob Moore
+        <br>
+        <span>on&nbsp;</span><time datetime="2022-10-17 00:00:00 &#43;0000 UTC">October 17, 2022</time>
+</div>
+
+		<h1 class="post-title">Blog Post 6: Ground Game</h1>
+<div class="post-line"></div>
+
+		
+
+		
+
+
+<p>This week I’ll be looking at the ground game at the district level, taking a pooled approach to my model where I run predictions of every congressional district in the country and tally their results in order to get a national seatshare prediction. Last week I did something similar with ad data on a few districts, so as a proof of concept I’m going to try it again with turnout data since it’s available for all districts. I’m also going to be ignoring redistricting for now because that’s a can of worms I do not want to open right now.</p>
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>When we think of political campaigns, we generally think of them serving two main functions when it comes to securing votes. The first is to convince undecided voters to agree with their ideas, and the second is to motivate people to turnout and vote on election day. As we have seen in literature like <a href="https://hollis.harvard.edu/primo-explore/fulldisplay?docid=TN_cdi_gale_infotracacademiconefile_A375757032&amp;context=PC&amp;vid=HVD2&amp;search_scope=everything&amp;tab=everything&amp;lang=en_US">Darr and Levendusky</a>, the jury is still out when it comes to whether campaigns are effective at convincing undecided voters to join their cause, but pieces like <a href="https://hollis.harvard.edu/primo-explore/fulldisplay?docid=TN_cdi_proquest_journals_2117059848&amp;context=PC&amp;vid=HVD2&amp;search_scope=everything&amp;tab=everything&amp;lang=en_US">Enos &amp; Fowler</a> show that campaigns can be quite effective at motivating voters to turnout on election day. There’s a lot of popular wisdom surrounding turnout that would suggest Democrats tend to be favored by higher turnout. As a result, recent moves by Republican officials to create more barriers to vote have been opposed by many voters both on principle and in practice. If high turnout favors Democrats, then attempts to artificially lower turnout would favor Republicans. The issue of voter suppression is important regardless of whether it has any significant electoral impact, but I wanted to highlight this discourse. Regardless, I’ll be building my model this week with a similar outcome variable as previous weeks, since I want to see if I can incorporate this approach for my final prediction.</p>
+</div>
+<div id="turnout-model" class="section level1">
+<h1>Turnout Model</h1>
+<p>To that end, I built a very simple model that predicts voteshare of the incumbent president’s party as a function of district-level turnout and whether the incumbent House representative is a member of the president’s party. For open races I have decided to code both candidates as challengers, so for this incumbency variable all open races will indicate that the incumbent representative is not a member of the sitting president’s party. While there is always an incumbent party and a challenger party, even in open races, I believe that having a new candidate is enough of a change that they should not be classified as incumbent. I may revisit this coding decision later but this is the decision I’ve made for this week. As a warning, I’m only looking at data from 2012 to 2022 since that is the farthest back our citizen voting age population (CVAP) data goes for the district level. Anything before that is made too messy because of redistricting, but given that there is only up to 5 data points for each district, there will probably be a lot of uncertainty for this model as with last week’s. I’ve also opted not to include expert predictions because there are too many districts that don’t have any expert predictions for them.</p>
+<p>Let’s look at some histograms of summary statistics for my model:</p>
+<p><img src="http://example.org/post/2022-10-17-blog-post-6-ground-game/index_files/figure-html/adj-1.png" width="672" /></p>
+<p>As with last week, the adjusted r-squared values do not look good. There’s a lot of overfitting and there’s also a troubling amount of negative values as well. I’m going to blame this on my very few data points and move on to coefficients. Note that the red line represents the median value for each coefficient:</p>
+<p><img src="http://example.org/post/2022-10-17-blog-post-6-ground-game/index_files/figure-html/coeff_1-1.png" width="672" /></p>
+<p><img src="http://example.org/post/2022-10-17-blog-post-6-ground-game/index_files/figure-html/coeff_2-1.png" width="672" /></p>
+<p>Looking at the first histogram, my models predict that candidates from the sitting president’s party benefit from high turnout. Note this doesn’t really tease out any differential effects based on party but at the very least we’ll look at the overall prediction for 2022 later. Looking at the second histogram, we get some surprising results. Being an incumbent from the president’s party is almost always positive electorally, but there is a ton of variance when it comes to the size of these coefficients. This lines up with evidence that incumbency is a powerful advantage, but I’m not sure what to make of these effects.</p>
+<p>Let’s look at p-values next:</p>
+<p><img src="http://example.org/post/2022-10-17-blog-post-6-ground-game/index_files/figure-html/turnout_p-1.png" width="672" /></p>
+<p><img src="http://example.org/post/2022-10-17-blog-post-6-ground-game/index_files/figure-html/incumb_p-1.png" width="672" /></p>
+<p>Surprisingly, there are a fair number of districts for which turnout has strong statistical significance. There are many more with little to no significance, but this is really interesting to me. If I had more time I’d look into which districts these are but for now I’ll just let the histogram do the talking. As expected, incumbency is a very strong predictor as we have seen for many weeks now.</p>
+</div>
+<div id="predicting-with-a-pooled-model" class="section level1">
+<h1>Predicting with a pooled model</h1>
+</div>
+
+
+		
+	</div>
+
+	<div class="pagination">
+		<a href="/post/2022-10-10-blog-post-5-the-air-war/" class="left arrow">&#8592;</a>
+		<a href="/post/2022-10-24-blog-post-7-shocks/" class="right arrow">&#8594;</a>
+
+		<a href="#" class="top">Top</a>
+	</div>
+</main>
+
+
+        		<footer>
+			
+			<span>
+			&copy; <time datetime="2022-11-07 18:19:37.3165388 -0500 EST m=&#43;18.099195501">2022</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			</span>
+		</footer>
+
+    </body>
+</html>
