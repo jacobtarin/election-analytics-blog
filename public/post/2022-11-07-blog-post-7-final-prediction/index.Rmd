@@ -130,7 +130,7 @@ Over this semester, I've had the opportunity to look at a lot of different predi
 
 # Results
 ```{r, echo = FALSE}
-stargazer(combo, type = "latex", covariate.labels = c(
+stargazer(combo, type = "text", covariate.labels = c(
   "House Majority Party", "Midterm Election", "GDP Growth Percent", "Generic Poll Support", "Previous Seatshare"),
   dep.var.labels = "Seatshare of Incumbent President's Party")
 ```
