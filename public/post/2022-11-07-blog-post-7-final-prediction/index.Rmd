@@ -129,7 +129,7 @@ I used previous seatshare as a somewhat hacky predictor. In some ways it feels l
 Over this semester, I've had the opportunity to look at a lot of different predictors and think about what they mean in the context of voter behavior. You can look at my blog posts from previous weeks, but there were many predictors that didn't end up in my final model such as turnout, economic shocks, expert predictions, etc. Most of the time, this was because the data either had no statistical significance or didn't have enough historical observations to draw any conclusions from. The predictors I kept in my model were the ones that proved the most robust given the outcome of House seatshare that I was trying to predict.
 
 # Results
-```{r, results = 'asis', echo = FALSE}
+```{r, echo = FALSE}
 stargazer(combo, type = "latex", covariate.labels = c(
   "House Majority Party", "Midterm Election", "GDP Growth Percent", "Generic Poll Support", "Previous Seatshare"),
   dep.var.labels = "Seatshare of Incumbent President's Party")
@@ -164,7 +164,7 @@ My model's prediction is vulnerable to this very problem. With another very comp
 # Predictive Interval
 
 ```{r pred_interval, echo = FALSE}
-knitr::kable(predictions[, 2:4], col.names = c("Prediction", "Lower Bound", "Upper Bound"))
+knitr::kable(predictions[, 2:4], col.names = c("Prediction", "Lower Bound", "Upper Bound"), "simple")
 ```
 
 The 95% predictive interval for my prediction is quite wide, but still a reasonable one that I believe to be within the realm of possibility. A 95% predictive interval states that if observations in my dataset are part of a distribution, and if I were to keep sampling from this distribution infinitely (i.e. if we were to keep holding elections) then 95% of these new observations would fall within this interval. And if we look at the lower bound of 41.77% seatshare and the upper bound of 55.39% seatshare, I think this looks pretty good. Unless the American political system fundamentally changes in the future, I think it is highly unlikely that we see one party go outside this general range.
