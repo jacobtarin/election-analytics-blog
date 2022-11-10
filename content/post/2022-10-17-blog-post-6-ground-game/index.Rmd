@@ -11,6 +11,7 @@ library(tidyverse)
 library(sf)
 library(plotly)
 library(broom)
+library(ggpubr)
 
 # Reading in data
 incumbents <- read_csv("../data/incumb_dist_1948-2020.csv") %>% 
@@ -109,6 +110,9 @@ turnout_2022_avg <- c()
 turnout_2022_low <- c()
 turnout_2022_hi <- c()
 incumb_2022 <- c()
+pred_avg <- c()
+pred_hi <- c()
+pred_low <- c()
 
 for (district in 1:nrow(nested_data)){
   temp <- nested_data[[2]][[district]]
@@ -117,14 +121,85 @@ for (district in 1:nrow(nested_data)){
   model <- lm(incumbent_pres_pct ~ turnout + pres_rep_match, data = temp)
   
   # Add new turnouts to lists
-  avg_midterm_turnout <- (temp[[16]][[2]] + temp[[16]][[4]]) / 2
-  turnout_2022_avg <- c(turnout_2022_avg, avg_midterm_turnout)
-  turnout_2022_low <- c(turnout_2022_low, avg_midterm_turnout - 10)
-  turnout_2022_hi <- c(turnout_2022_hi, avg_midterm_turnout + 10)
+  avg <- (temp[[16]][[2]] + temp[[16]][[4]]) / 2
+  hi <- avg + 10
+  low <- avg - 10
+  turnout_2022_avg <- c(turnout_2022_avg, avg)
+  turnout_2022_low <- c(turnout_2022_low, low)
+  turnout_2022_hi <- c(turnout_2022_hi, hi)
   
   # Add new incumbency to lists
-  incumb_2022 <- c(incumb_2022, ifelse(temp[[20]][[1]] == "R", 0, 1))
+  temp_incumb <- ifelse(temp[[20]][[1]] == "R", 0, 1)
+  incumb_2022 <- c(incumb_2022, temp_incumb)
+  
+  # Add predictions to lists
+  pred_data_avg <- NA
+  pred_data_avg$turnout <- avg
+  pred_data_avg$pres_rep_match <- temp_incumb
+  
+  pred_data_hi <- pred_data_avg
+  pred_data_hi$turnout <- hi
+  
+  pred_data_low <- pred_data_avg
+  pred_data_low$turnout <- low
+  
+  pred_avg <- c(pred_avg, predict(model, pred_data_avg))
+  pred_hi <- c(pred_hi, predict(model, pred_data_hi))
+  pred_low <- c(pred_low, predict(model, pred_data_low))
 }
+
+# Combine predictions
+pred_vis_data <- data.frame(unlist(pred_avg), unlist(pred_hi), unlist(pred_low)) %>% 
+  mutate(avg = unlist.pred_avg.,
+         hi = unlist.pred_hi.,
+         low = unlist.pred_low.) %>% 
+  select(avg, hi, low)
+
+# Get seat totals
+d_seats_avg <- pred_vis_data %>% 
+  filter(avg >= 50) %>% 
+  nrow()
+
+d_seats_low <- pred_vis_data %>% 
+  filter(low >= 50) %>% 
+  nrow()
+
+d_seats_hi <- pred_vis_data %>% 
+  filter(hi >= 50) %>% 
+  nrow()
+
+# Generate plots
+avg_histogram <- ggplot(data = pred_vis_data, aes(x = avg)) +
+  geom_histogram(bins = 50, color = "white", fill = "#69b3a2") +
+  labs(title = "Average Turnout",
+       x = "Democratic Voteshare %",
+       y = "Count",
+       caption = "201 Democratic Seats\n234 Republican Seats") +
+  geom_vline(xintercept = 50, col = "red") +
+  xlim(0, 100)
+
+hi_histogram <- ggplot(data = pred_vis_data, aes(x = hi)) +
+  geom_histogram(bins = 50, color = "white", fill = "#69b3a2") +
+  labs(title = "High Turnout (+10%)",
+       x = "Democratic Voteshare %",
+       y = "Count",
+       caption = "211 Democratic Seats\n224 Republican Seats") +
+  geom_vline(xintercept = 50, col = "red") +
+  xlim(0, 100)
+
+low_histogram <- ggplot(data = pred_vis_data, aes(x = low)) +
+  geom_histogram(bins = 50, color = "white", fill = "#69b3a2") +
+  labs(title = "Low Turnout (-10%)",
+       x = "Democratic Voteshare %",
+       y = "Count",
+       caption = "198 Democratic Seats\n237 Republican Seats") +
+  geom_vline(xintercept = 50, col = "red") +
+  xlim(0, 100)
+
+combo_figure <- ggarrange(low_histogram, avg_histogram, hi_histogram,
+                          ncol = 3, nrow = 1)
+annotate_figure(combo_figure, top = text_grob("District-Level Election Predictions with Varied Turnout", 
+               color = "black", face = "bold", size = 14))
 
 ```
 This week I'll be looking at the ground game at the district level, taking a pooled approach to my model where I run predictions of every congressional district in the country and tally their results in order to get a national seatshare prediction. Last week I did something similar with ad data on a few districts, so as a proof of concept I'm going to try it again with turnout data since it's available for all districts. I'm also going to be ignoring redistricting for now because that's a can of worms I do not want to open right now.
@@ -168,3 +243,9 @@ incumb_p_hist
 Surprisingly, there are a fair number of districts for which turnout has strong statistical significance. There are many more with little to no significance, but this is really interesting to me. If I had more time I'd look into which districts these are but for now I'll just let the histogram do the talking. As expected, incumbency is a very strong predictor as we have seen for many weeks now. 
 
 # Predicting with a pooled model
+
+```{r pred_vis, warning = FALSE, echo = FALSE}
+combo_figure
+```
+
+I decided to look at 3 different turnout scenarios to see how my model behaved in each scenario. First, I calculated the average turnout in each district during prior midterm years and created high and low turnout values by adding or subtracting 10 percentage points. I then ran a model for each district and aggregated the results, tallying up the seats that Democrats won in order to get final seat counts. While my p-values were all over the place, I think this is a really interesting result nonetheless. While low turnout and average turnout have very similar seat totals, high turnout nets the Democrats an extra 10 seats. I don't really trust this prediction but it's a really interesting proof of concept for me. I'll continue to improve it in coming weeks to see if I can get something that has some predictive power at the district level, barring redistricting issues.
