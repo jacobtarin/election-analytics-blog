@@ -83,7 +83,7 @@ vis_data <- data.frame(leg, Party, seats)
 
 seatshare_vis <- ggplot(vis_data, aes(fill = Party, x = leg, y = seats)) +
   geom_bar(position="stack", stat="identity", width = 0.5) +
-  scale_fill_manual(values = c("blue", "red")) +
+  scale_fill_manual(values = c("#30a2da", "#fc4f30")) +
   geom_hline(yintercept = 217.5, size = 1) +
   labs(title = "2022 House Midterm Election Prediction") +
   ylab("Seats Held") +
@@ -167,7 +167,7 @@ My model's prediction is vulnerable to this very problem. With another very comp
 knitr::kable(predictions[, 2:4], col.names = c("Prediction", "Lower Bound", "Upper Bound"), "simple")
 ```
 
-The 95% predictive interval for my prediction is quite wide, but still a reasonable one that I believe to be within the realm of possibility. A 95% predictive interval states that if observations in my dataset are part of a distribution, and if I were to keep sampling from this distribution infinitely (i.e. if we were to keep holding elections) then 95% of these new observations would fall within this interval. And if we look at the lower bound of 41.77% seatshare and the upper bound of 55.39% seatshare, I think this looks pretty good. Unless the American political system fundamentally changes in the future, I think it is highly unlikely that we see one party go outside this general range.
+The 95% predictive interval for my prediction is quite wide, but still a reasonable one that I believe to be within the realm of possibility. A 95% predictive interval states that if observations in my dataset are part of a distribution, and if I were to keep sampling from this distribution infinitely (i.e. if we were to keep holding elections), then 95% of these new observations would fall within this interval. And if we look at the lower bound of 41.77% seatshare and the upper bound of 55.39% seatshare, I think this looks pretty good. Unless the American political system fundamentally changes in the future, I think it is highly unlikely that we see one party go outside this general range.
 
 *Note that this interval is not centered at 50%, so technically it is possible for the president's party to be within the interval and push the other party outside the interval, but from a general standpoint I think the interval makes sense.*
 

@@ -6,7 +6,17 @@
     <description>Recent content on Jacob&#39;s 2022 Midterm Elections Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 21 Nov 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blog Post 9: Post-Election Reflections</title>
+      <link>http://example.org/post/2022-11-21-blog-post-9-post-election-reflections/</link>
+      <pubDate>Mon, 21 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>http://example.org/post/2022-11-21-blog-post-9-post-election-reflections/</guid>
+      <description>This week I’ll be reflecting on my model’s results now that the House midterm election is mostly concluded.
+RecapMy final model was a linear regression model using national data from 1954-2020 in order to predict House seatshare of the sitting president’s party following the House midterm elections. I predicted that the Democrats would win 48.58% of the seats in the House, which translated to about 211 seats for the Democrats and 224 seats for the Republicans.</description>
+    </item>
+    
     <item>
       <title>Blog Post 8: Final Prediction</title>
       <link>http://example.org/post/2022-11-07-blog-post-7-final-prediction/</link>

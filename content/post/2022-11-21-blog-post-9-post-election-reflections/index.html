@@ -1,0 +1,478 @@
+---
+title: 'Blog Post 9: Post-Election Reflections'
+author: Jacob Moore
+date: '2022-11-21'
+slug: []
+categories: []
+tags: []
+---
+
+
+
+<p>This week I’ll be reflecting on my model’s results now that the House midterm election is mostly concluded.</p>
+<div id="recap" class="section level1">
+<h1>Recap</h1>
+<p>My final model was a linear regression model using national data from 1954-2020 in order to predict House seatshare of the sitting president’s party following the House midterm elections. I predicted that the <strong>Democrats would win 48.58% of the seats in the House</strong>, which translated to about <strong>211 seats for the Democrats</strong> and <strong>224 seats for the Republicans</strong>. To make this prediction, I used the following as input variables: house majority party, midterm election status, Q7 GDP growth percent, generic poll support, and previous seatshare. You can find a more detailed breakdown of my model in my previous blog post.</p>
+</div>
+<div id="accuracy" class="section level1">
+<h1>Accuracy</h1>
+<p>At the time of writing this post, Democrats hold 212 seats and Republicans hold 218 seats in the House, leaving 5 seats uncalled. These seats correspond to the following districts: CA-3, CA-13, CA-22, CO-3, and AK-1. Of these uncalled districts, AK-1 will be won by Democrats once Alaska’s ranked-choice measure comes into effect on November 23rd. The three California districts will likely be won with a small margin by Republicans, and Colorado’s 3rd district currently favors the Republicans with a minuscule 50.1% lead. If we assume the current front-runners in each of these districts maintain their current leads, Democrats will control 213 seats in the House and Republicans will control 222 seats in the House, meaning that my model would be off by 2 seats, or about 0.46% seatshare. Since I am already off by 1 seat in my prediction, our lowest seat error would be about 0.23% seatshare. Our highest seat error would be 6 seats or about 1.38% seatshare. Below is a table that summarizes these errors:</p>
+<div id="uydhddbmyd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#uydhddbmyd .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#uydhddbmyd .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#uydhddbmyd .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#uydhddbmyd .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#uydhddbmyd .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#uydhddbmyd .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uydhddbmyd .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#uydhddbmyd .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#uydhddbmyd .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#uydhddbmyd .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#uydhddbmyd .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#uydhddbmyd .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#uydhddbmyd .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#uydhddbmyd .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#uydhddbmyd .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#uydhddbmyd .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#uydhddbmyd .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#uydhddbmyd .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uydhddbmyd .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#uydhddbmyd .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#uydhddbmyd .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uydhddbmyd .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#uydhddbmyd .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#uydhddbmyd .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uydhddbmyd .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uydhddbmyd .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#uydhddbmyd .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#uydhddbmyd .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#uydhddbmyd .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#uydhddbmyd .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uydhddbmyd .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#uydhddbmyd .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#uydhddbmyd .gt_left {
+  text-align: left;
+}
+
+#uydhddbmyd .gt_center {
+  text-align: center;
+}
+
+#uydhddbmyd .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#uydhddbmyd .gt_font_normal {
+  font-weight: normal;
+}
+
+#uydhddbmyd .gt_font_bold {
+  font-weight: bold;
+}
+
+#uydhddbmyd .gt_font_italic {
+  font-style: italic;
+}
+
+#uydhddbmyd .gt_super {
+  font-size: 65%;
+}
+
+#uydhddbmyd .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#uydhddbmyd .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#uydhddbmyd .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#uydhddbmyd .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#uydhddbmyd .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#uydhddbmyd .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#uydhddbmyd .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+  <thead class="gt_header">
+    <tr>
+      <td colspan="2" class="gt_heading gt_title gt_font_normal gt_bottom_border" style>Error Metrics for National Seatshare Model</td>
+    </tr>
+    
+  </thead>
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="Metric">Metric</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Value">Value</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Metric" class="gt_row gt_center">Lowest Seat Error</td>
+<td headers="Value" class="gt_row gt_right">0.229885</td></tr>
+    <tr><td headers="Metric" class="gt_row gt_center">Assumed Seat Error</td>
+<td headers="Value" class="gt_row gt_right">0.459770</td></tr>
+    <tr><td headers="Metric" class="gt_row gt_center">Highest Seat Error</td>
+<td headers="Value" class="gt_row gt_right">1.379310</td></tr>
+    <tr><td headers="Metric" class="gt_row gt_center">RMSE</td>
+<td headers="Value" class="gt_row gt_right">3.409698</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p>Another way we can assess accuracy is to look at the differences between our observed values and our predicted values, i.e. residuals. Below is a plot of my model’s residuals for all elections from 1954 to 2020:</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/residuals%20-1.png" width="672" /></p>
+<p>Next is presidential elections only:</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/pres-1.png" width="672" /></p>
+<p>And next is midterm elections only:</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/midterm-1.png" width="672" /></p>
+<p>Keeping in mind that negative residuals correspond to my model overestimating seatshare and positive residuals correspond to my model underestimating seatshare, it’s interesting to see that my model overestimated seatshare of the sitting president’s party for the past 3 midterm elections, but underestimated it for this year. While it is only a difference of 0.23% to 1.38% seatshare, this is still a pretty significant change, so why did this happen?</p>
+</div>
+<div id="potential-sources-of-inacurracy" class="section level1">
+<h1>Potential Sources of Inacurracy</h1>
+<p>I believe that there are three potential reasons as to why my model was inaccurate this midterm election by means of underestimation as opposed to overestimation like the past 3 midterms:</p>
+<ol style="list-style-type: decimal">
+<li>GDP Growth: As discussed last week, my model predicts an inverse relationship between GDP growth and seatshare, which is troubling given existing literature and conventional wisdom surrounding this relationship. Generally speaking, we would expect voters to reward incumbents for good economic performance, not punish them. The past 3 midterm elections saw Q7 GDP growth ranging between 0.53% and 1.22%. This year’s midterm saw Q7 GDP growth of 2.6%—almost double that of the highest Q7 GDP growth in the last 3 midterm elections. With higher than usual GDP growth, my model very well could have underestimated the electoral performance of the Democrats this election. I think that voters reward incumbents for good performance, but since the GDP is always growing on average, my model may have been thrown off by years where incumbents got punished for lower than normal GDP growth that wasn’t negative. In order to test this hypothesis, I would control for mean Q7 GDP growth when looking at the relationship between GDP growth and House seatshare.</li>
+<li>The Dobbs Decision: As I learned in previous weeks, it is incredibly difficult to operationalize shocks and other political events and incorporate them into a predictive model. This is not to say that political events do not matter. The Dobbs decision will likely be the biggest disruption to previously-established constitutional rights of our lifetime, with unimaginable legal and bodily consequences. Given existing research on differential issue-ownership between the two parties and the Democrats being the pro-choice party opposed to the Dobbs decision, I believe this decision had enough of an affect to persuade voters to turnout for the Democrats who wouldn’t have previously. Since this type of data wasn’t included in my model, I think it underestimated Democratic seatshare by consequence. In order to test this hypothesis, I would want to look at exit polls to see if abortion rights was a higher priority for voters this election as opposed to previous ones, especially for voters in more competitive districts. While rhetoric surrounding abortion has certainly gotten more incendiary over the years, the national legal framework surrounding abortion hasn’t changed much between the Roe v. Wade decision and the Dobbs decision. If Dobbs influenced this election and gave the Democrats a boost, I would expect to see a lot more people talking about abortion rights in the exit polls this year.</li>
+<li>Youth Turnout: I didn’t end up including turnout in my model as I felt that gerrymandering and redistricting had too much power over how much turnout can affect electoral outcomes. In order to include turnout in a way that would take gerrymandering and redistricting into account, I would have had to restrict my dataset into too few observations, which is a tradeoff that I didn’t want to make. That said, media coverage of this midterm election suggests that youth turnout played a significant role in preventing a Democratic blowout. While there is still disagreement over how much of an effect younger voters had, there is a lot of historical data that suggests younger voters are more liberal than older voters. Since I didn’t include turnout data, my model did not take this surge of youth turnout into account and likely underestimated Democratic seatshare. To test this hypothesis, I would want to look at national turnout broken down into age groups, examining younger voters’ political preferences and seeing if increased youth turnout corresponds to increased seatshare for the Democrats.</li>
+</ol>
+</div>
+<div id="potential-changes-to-my-model" class="section level1">
+<h1>Potential Changes to my Model</h1>
+<p>Looking back, I think the main thing I’d want to change about my model is make predictions district-by-district in order to aggregate a national seat prediction. There was better data available at the national level and I was able to ignore the ever-looming spectre of redistricting to a certain extent, but there is a lot less interesting insight to be gleaned from a national-level prediction such as mine. If I had predicted each district individually, I would have been able to look at differences in classification accuracy across districts, see how a given predictor has varying effects across districts, and have generally more actionable results. I think it would have been more fun to have a prediction for all 435 House races, but at the same time there could be a lot more sensitivity to noise at the district level than the national level. At the end of the day the structure of my model was a tradeoff that I made but sometimes I just want to have it both ways.</p>
+</div>
