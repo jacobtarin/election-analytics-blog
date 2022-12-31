@@ -9,18 +9,18 @@
 		<title>Blog Post 5: The Air War &middot; Jacob&#39;s 2022 Midterm Elections Blog</title>
 
 		
-		<link rel="stylesheet" href="/css/style.css">
-		<link rel="stylesheet" href="/css/fonts.css">
+		<link rel="stylesheet" href="/election-analytics-blog/css/style.css">
+		<link rel="stylesheet" href="/election-analytics-blog/css/fonts.css">
 		
-		<link rel="icon" href="/favicon.ico"/>
-		<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+		<link rel="icon" href="/election-analytics-blog/favicon.ico"/>
+		<link rel="icon" type="image/png" sizes="32x32" href="/election-analytics-blog/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="/election-analytics-blog/images/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="/election-analytics-blog/images/apple-touch-icon.png">
 
 		
 		<link href="" rel="alternate" type="application/rss+xml" title="Jacob&#39;s 2022 Midterm Elections Blog" />
 
-		<script src="/js/darkmode.js"></script>
+		<script src="/election-analytics-blog/js/darkmode.js"></script>
 	</head>
 
     <body>
@@ -72,16 +72,16 @@
 <div id="uneven-distribution-of-political-ads" class="section level1">
 <h1>Uneven Distribution of Political Ads</h1>
 <p>Political ads don’t appear on tv in every district. From a financial perspective, it doesn’t make any sense to spend money on ads in a district that you’re already going to win, so campaigns tend to only air ads in the most competitive districts. From another perspective, it might not make sense to air an ad if you’re a campaign trying to mobilize a group of voters who don’t watch tv very often, such as younger voters. To demonstrate this, let’s see which districts in the 2018 midterm elections received televised political ads:</p>
-<p><img src="http://example.org/post/2022-10-10-blog-post-5-the-air-war/index_files/figure-html/map1-1.png" width="672" /></p>
+<p><img src="https://jacobtarin.github.io/election-analytics-blog/post/2022-10-10-blog-post-5-the-air-war/index_files/figure-html/map1-1.png" width="672" /></p>
 <p>As we can see here, there are many districts where no campaign ads were aired, and many more where there weren’t that many ads aired when compared to some other districts. What about our assumption that campaigns don’t air ads in noncompetitive districts? Let’s take a look at the partisan ratios of ads aired by district:</p>
-<p><img src="http://example.org/post/2022-10-10-blog-post-5-the-air-war/index_files/figure-html/map2-1.png" width="672" /></p>
+<p><img src="https://jacobtarin.github.io/election-analytics-blog/post/2022-10-10-blog-post-5-the-air-war/index_files/figure-html/map2-1.png" width="672" /></p>
 <p>It seems like many of the districts where political ads were aired saw a lot of them, lending credibility to the idea that campaigns focus ads on competitive districts. Interestingly, most of these districts with lots of ads–perhaps about 15,000 or so ads during the 2018 election cycle–saw a slightly higher proportion of Democrat ads over Republican ads. Since this was the 2018 midterm election, this lines up with the anti-Trump rhetoric and the Democratic Party’s efforts to mobilize voters and swing long-help GOP seats. There were also quite a few districts that saw a small amount of ads, and most of these had either mainly Democrat ads or mainly Republican ads, suggesting that these were less competitive districts overall.</p>
 </div>
 <div id="making-a-model" class="section level1">
 <h1>Making a Model</h1>
 <p>To build a district-level model that incorporates this data, a lot of filtering needs to be done. We only have access to data from 2006 to 2018, and I want to make sure I only make predictions using districts that have “enough” data, so I arbitrarily decided to only look at districts with 4 or more years of data available. I then attempted to predict Democratic vote share in each district using the ad data from 2018 as more of a proof of concept than anything. Let’s look at coefficients and adjusted r-squared before we look at actual predictions.</p>
-<p><img src="http://example.org/post/2022-10-10-blog-post-5-the-air-war/index_files/figure-html/plot1-1.png" width="672" /></p>
-<p><img src="http://example.org/post/2022-10-10-blog-post-5-the-air-war/index_files/figure-html/plot2-1.png" width="672" /></p>
+<p><img src="https://jacobtarin.github.io/election-analytics-blog/post/2022-10-10-blog-post-5-the-air-war/index_files/figure-html/plot1-1.png" width="672" /></p>
+<p><img src="https://jacobtarin.github.io/election-analytics-blog/post/2022-10-10-blog-post-5-the-air-war/index_files/figure-html/plot2-1.png" width="672" /></p>
 <p>At this point it’s clear that this model is not working how it should. There are coefficients in the negative 700’s, adjusted r-squared values of both 1 and -1, and most of these coefficients and values are outside of acceptable ranges. While I could incorporate this into an actual prediction, I think it’s safe to say that incorporating advertisement would be quite futile given the limited available data, and I would assume that any additional terms like incumbency would simply override these factors.</p>
 </div>
 
@@ -90,8 +90,8 @@
 	</div>
 
 	<div class="pagination">
-		<a href="/post/2022-10-02-blog-post-4-expert-predictions-and-incumbency/" class="left arrow">&#8592;</a>
-		<a href="/post/2022-10-17-blog-post-6-ground-game/" class="right arrow">&#8594;</a>
+		<a href="/election-analytics-blog/post/2022-10-02-blog-post-4-expert-predictions-and-incumbency/" class="left arrow">&#8592;</a>
+		<a href="/election-analytics-blog/post/2022-10-17-blog-post-6-ground-game/" class="right arrow">&#8594;</a>
 
 		<a href="#" class="top">Top</a>
 	</div>
@@ -101,7 +101,7 @@
         		<footer>
 			
 			<span>
-			&copy; <time datetime="2022-12-30 17:26:36.5406714 -0800 PST m=&#43;26.712988101">2022</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
+			&copy; <time datetime="2022-12-30 17:55:15.9925644 -0800 PST m=&#43;13.980597801">2022</time> . Made with <a href='https://gohugo.io'>Hugo</a> using the <a href='https://github.com/EmielH/tale-hugo/'>Tale</a> theme.
 			</span>
 		</footer>
 

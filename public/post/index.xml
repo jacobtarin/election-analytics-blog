@@ -2,105 +2,105 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Jacob&#39;s 2022 Midterm Elections Blog</title>
-    <link>http://example.org/post/</link>
+    <link>https://jacobtarin.github.io/election-analytics-blog/post/</link>
     <description>Recent content in Posts on Jacob&#39;s 2022 Midterm Elections Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="http://example.org/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Dec 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://jacobtarin.github.io/election-analytics-blog/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blog Post 10: Oregon&#39;s 4th Congressional District</title>
-      <link>http://example.org/post/2022-12-07-blog-post-10-oregon-s-4th-congressional-district/</link>
+      <link>https://jacobtarin.github.io/election-analytics-blog/post/2022-12-07-blog-post-10-oregon-s-4th-congressional-district/</link>
       <pubDate>Wed, 07 Dec 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/post/2022-12-07-blog-post-10-oregon-s-4th-congressional-district/</guid>
+      <guid>https://jacobtarin.github.io/election-analytics-blog/post/2022-12-07-blog-post-10-oregon-s-4th-congressional-district/</guid>
       <description>IntroductionThis semester, we’ve been asked to follow a congressional race in a district of our choosing. While not my home district, I’ve been following Oregon’s 4th Congressional District (OR-4) because longtime incumbent Peter DeFazio (D) is retiring from his position in the House of Representatives, leading to the first open election in OR-4 since 1986.
 OR-4 covers the counties in the southern portion of Oregon’s coast and contains the state’s two college towns of Eugene and Corvallis.</description>
     </item>
     
     <item>
       <title>Blog Post 9: Post-Election Reflections</title>
-      <link>http://example.org/post/2022-11-21-blog-post-9-post-election-reflections/</link>
+      <link>https://jacobtarin.github.io/election-analytics-blog/post/2022-11-21-blog-post-9-post-election-reflections/</link>
       <pubDate>Mon, 21 Nov 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/post/2022-11-21-blog-post-9-post-election-reflections/</guid>
+      <guid>https://jacobtarin.github.io/election-analytics-blog/post/2022-11-21-blog-post-9-post-election-reflections/</guid>
       <description>This week I’ll be reflecting on my model’s results now that the House midterm election is mostly concluded.
 RecapMy final model was a linear regression model using national data from 1954-2020 in order to predict House seatshare of the sitting president’s party following the House midterm elections. I predicted that the Democrats would win 48.58% of the seats in the House, which translated to about 211 seats for the Democrats and 224 seats for the Republicans.</description>
     </item>
     
     <item>
       <title>Blog Post 8: Final Prediction</title>
-      <link>http://example.org/post/2022-11-07-blog-post-7-final-prediction/</link>
+      <link>https://jacobtarin.github.io/election-analytics-blog/post/2022-11-07-blog-post-7-final-prediction/</link>
       <pubDate>Mon, 07 Nov 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/post/2022-11-07-blog-post-7-final-prediction/</guid>
+      <guid>https://jacobtarin.github.io/election-analytics-blog/post/2022-11-07-blog-post-7-final-prediction/</guid>
       <description>IntroductionThis week I’ll be making my final prediction for the 2022 House Midterm elections. My final model is a linear regression model using national data from 1954-2020 in order to predict the outcome of this year’s midterms based on 2022 data. I predict that the Democrats will win 48.58% of the seats in the House, which nets about 211 seats for the Democrats and 224 seats for the Republicans.</description>
     </item>
     
     <item>
       <title>Blog Post 7: Shocks</title>
-      <link>http://example.org/post/2022-10-24-blog-post-7-shocks/</link>
+      <link>https://jacobtarin.github.io/election-analytics-blog/post/2022-10-24-blog-post-7-shocks/</link>
       <pubDate>Mon, 24 Oct 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/post/2022-10-24-blog-post-7-shocks/</guid>
+      <guid>https://jacobtarin.github.io/election-analytics-blog/post/2022-10-24-blog-post-7-shocks/</guid>
       <description>This week I’ll be thinking about shocks, how they play into elections, and how they play into my model.
 IntroductionIn the context of elections, most people think of shocks as important events which occur during the election cycle that weren’t necessarily planned. These can be things ranging from earthquakes and judicial decisions to economic collapse and personal scandals. Much like advertisement, the effects of these shocks are often temporary, but existing literature has varying opinions on what kinds of shocks are relevant to voters.</description>
     </item>
     
     <item>
       <title>Blog Post 6: Ground Game</title>
-      <link>http://example.org/post/2022-10-17-blog-post-6-ground-game/</link>
+      <link>https://jacobtarin.github.io/election-analytics-blog/post/2022-10-17-blog-post-6-ground-game/</link>
       <pubDate>Mon, 17 Oct 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/post/2022-10-17-blog-post-6-ground-game/</guid>
+      <guid>https://jacobtarin.github.io/election-analytics-blog/post/2022-10-17-blog-post-6-ground-game/</guid>
       <description>This week I’ll be looking at the ground game at the district level, taking a pooled approach to my model where I run predictions of every congressional district in the country and tally their results in order to get a national seatshare prediction. Last week I did something similar with ad data on a few districts, so as a proof of concept I’m going to try it again with turnout data since it’s available for all districts.</description>
     </item>
     
     <item>
       <title>Blog Post 5: The Air War</title>
-      <link>http://example.org/post/2022-10-10-blog-post-5-the-air-war/</link>
+      <link>https://jacobtarin.github.io/election-analytics-blog/post/2022-10-10-blog-post-5-the-air-war/</link>
       <pubDate>Mon, 10 Oct 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/post/2022-10-10-blog-post-5-the-air-war/</guid>
+      <guid>https://jacobtarin.github.io/election-analytics-blog/post/2022-10-10-blog-post-5-the-air-war/</guid>
       <description>This week I’ll be looking at televised political ads to see if we can learn more about how campaigns work and whether their actions are correlated to any electoral gains.
 IntroductionUnlike fundamentals that I’ve looked at in past weeks, the “air war” is something within the control of campaigns. Candidates can choose how much of their campaign budget to dedicate to political ads, along with where and when to air them.</description>
     </item>
     
     <item>
       <title>Blog Post 4: Expert Predictions and Incumbency</title>
-      <link>http://example.org/post/2022-10-02-blog-post-4-expert-predictions-and-incumbency/</link>
+      <link>https://jacobtarin.github.io/election-analytics-blog/post/2022-10-02-blog-post-4-expert-predictions-and-incumbency/</link>
       <pubDate>Sun, 02 Oct 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/post/2022-10-02-blog-post-4-expert-predictions-and-incumbency/</guid>
+      <guid>https://jacobtarin.github.io/election-analytics-blog/post/2022-10-02-blog-post-4-expert-predictions-and-incumbency/</guid>
       <description>This week I’ll be looking at expert predictions and incumbency to help build my model for the upcoming 2022 midterm election. I’ll start by assessing the accuracy of expert predictions in the 2018 midterm elections before incorporating incumbency and potentially expert predictions into my model.
 Expert PredictionsI am not alone when it comes to attempting to predict the outcomes of elections. There are so many different media outlets, researchers, think tanks, and political hobbyists who attempt to predict the outcomes of elections.</description>
     </item>
     
     <item>
       <title>Blog Post 3: Polling</title>
-      <link>http://example.org/post/2022-09-25-blog-post-3-polling/</link>
+      <link>https://jacobtarin.github.io/election-analytics-blog/post/2022-09-25-blog-post-3-polling/</link>
       <pubDate>Sun, 25 Sep 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/post/2022-09-25-blog-post-3-polling/</guid>
+      <guid>https://jacobtarin.github.io/election-analytics-blog/post/2022-09-25-blog-post-3-polling/</guid>
       <description>This week I will be looking at polls in an attempt to incorporate them into my predictive model of the upcoming midterm elections.
 IntroductionIn recent years, especially after the 2016 election, the trustworthiness of polls have come under intense scrutiny. I’m sure we all remember our surprise at Donald Trump winning the election despite nearly every major poll predicting a Clinton victory. While many pollsters cited that the results were withing their established margins of error, spectators were left confused.</description>
     </item>
     
     <item>
       <title>Blog Post 2: Economic Indicators</title>
-      <link>http://example.org/post/2022-09-16-blog-post-2-economic-indicators/</link>
+      <link>https://jacobtarin.github.io/election-analytics-blog/post/2022-09-16-blog-post-2-economic-indicators/</link>
       <pubDate>Fri, 16 Sep 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/post/2022-09-16-blog-post-2-economic-indicators/</guid>
+      <guid>https://jacobtarin.github.io/election-analytics-blog/post/2022-09-16-blog-post-2-economic-indicators/</guid>
       <description>This week I’ll be looking at some economic indicators to see if they hold any predictive power over past midterm elections. In particular, I am going to compare three models: one that uses only GDP growth in the last quarter before an election as an independent variable, one that uses only RDI growth in the last quarter before an election, and one that looks at both.
 IntroductionHealy and Lenz, among many others, document how the recent performance of the economy is a very good predictor of popular vote share in the presidential election.</description>
     </item>
     
     <item>
       <title>Blog Post 1: Exploring Past House Vote and Seat Share</title>
-      <link>http://example.org/post/2022-09-14-blog-post-1/</link>
+      <link>https://jacobtarin.github.io/election-analytics-blog/post/2022-09-14-blog-post-1/</link>
       <pubDate>Wed, 14 Sep 2022 00:00:00 +0000</pubDate>
       
-      <guid>http://example.org/post/2022-09-14-blog-post-1/</guid>
+      <guid>https://jacobtarin.github.io/election-analytics-blog/post/2022-09-14-blog-post-1/</guid>
       <description>This blog post will be the first in a series of posts for Gov 1347: Election Analytics, a course at Harvard taught by Ryan Enos. Over the course of this semester, I will be building up my electoral knowledge in order to build a predictive model of the upcoming 2022 midterm elections.
 Vote Share and Seat Share by State in the 2020 House ElectionLet’s attempt to visualize past House election data to get a better sense of the past political landscape and warm up my incredibly rusty R skills.</description>
     </item>

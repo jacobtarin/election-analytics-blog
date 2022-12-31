@@ -1,4 +1,4 @@
 theme: "tale-hugo"
-baseURL: http://example.org/
+baseURL: https://jacobtarin.github.io/election-analytics-blog/
 languageCode: en-us
 title: Jacob's 2022 Midterm Elections Blog
